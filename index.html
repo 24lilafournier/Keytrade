@@ -1,0 +1,1530 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keytrade Bank — Guide Entretien Complet v2 — Operational Risk Officer TPRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* ── FOND CRÈME / IVOIRE ── */
+  --bg:    #F6F1E9;
+  --bg2:   #EDE6D6;
+  --bg3:   #E4DAC8;
+  --bg4:   #D9CEBC;
+  --line:  #C4B89E;
+  --line2: #B0A48A;
+  /* ── ENCRE ── */
+  --ink:  #1C1610;
+  --ink2: #4A3C28;
+  --ink3: #8A7A60;
+  /* ── BLEU MARINE — accent RH ── */
+  --navy:     #1A3560;
+  --navy-dim: rgba(26,53,96,0.09);
+  --navy-line:rgba(26,53,96,0.28);
+  /* ── DORÉ / OCRE — accent Hiring Manager ── */
+  --gold:     #B8841E;
+  --gold-dim: rgba(184,132,30,0.1);
+  --gold-line:rgba(184,132,30,0.3);
+  /* ── BLEU ACIER — accent Head of Dept ── */
+  --steel:     #2A5F8F;
+  --steel-dim: rgba(42,95,143,0.1);
+  --steel-line:rgba(42,95,143,0.28);
+  /* ── ANGLAIS — bleu saphir ── */
+  --sapphire:     #1E4D8C;
+  --sapphire-dim: rgba(30,77,140,0.1);
+  /* ── VERT OLIVE — succès ── */
+  --olive:     #3D6B45;
+  --olive-dim: rgba(61,107,69,0.1);
+  --olive-line:rgba(61,107,69,0.28);
+  /* ── BORDEAUX — danger/piège ── */
+  --wine:     #7A2020;
+  --wine-dim: rgba(122,32,32,0.1);
+  --wine-line:rgba(122,32,32,0.28);
+  /* ── TERRACOTTA — avertissement ── */
+  --terra:     #A0522D;
+  --terra-dim: rgba(160,82,45,0.1);
+  --terra-line:rgba(160,82,45,0.28);
+
+  --mono:  'DM Mono', monospace;
+  --sans:  'Outfit', sans-serif;
+  --serif: 'Cormorant Garamond', serif;
+  --nav-h: 52px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.68;
+}
+
+/* ═══ PROGRESS ═══ */
+.progress {
+  position: fixed; top: 0; left: 0; height: 2px; z-index: 999;
+  background: linear-gradient(90deg, var(--navy), var(--gold));
+  width: 0%; transition: width 0.08s;
+  box-shadow: 0 0 6px rgba(184,132,30,0.4);
+}
+
+/* ═══ NAV ═══ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h);
+  background: rgba(246,241,233,0.97);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center;
+  padding: 0 28px; gap: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.nav-logo {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--navy); font-weight: 500;
+  letter-spacing: 0.07em; white-space: nowrap; flex-shrink: 0;
+}
+
+.nav-tabs {
+  display: flex; gap: 2px; list-style: none;
+  overflow-x: auto; scrollbar-width: none; flex: 1;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  font-family: var(--mono); font-size: 10px;
+  padding: 5px 11px; border-radius: 4px;
+  color: var(--ink3); text-decoration: none;
+  letter-spacing: 0.06em; white-space: nowrap;
+  transition: all 0.15s; cursor: pointer;
+  border: none; background: none;
+}
+.nav-tab:hover { color: var(--ink); background: var(--bg3); }
+.nav-tab.active { color: var(--navy); background: var(--navy-dim); }
+
+.nav-badge {
+  font-family: var(--mono); font-size: 10px;
+  padding: 4px 10px; border-radius: 3px;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-line);
+  color: var(--gold); letter-spacing: 0.05em;
+  white-space: nowrap; flex-shrink: 0;
+  cursor: pointer; transition: all 0.15s;
+}
+.nav-badge:hover { background: rgba(184,132,30,0.18); }
+
+/* ═══ HERO ═══ */
+.hero {
+  margin-top: var(--nav-h);
+  padding: 60px 52px 52px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(150deg, #C8D8F0 0%, #E8D8B8 40%, #F6F1E9 68%);
+  position: relative; overflow: hidden;
+}
+.hero::after {
+  content: 'RISK';
+  position: absolute; right: -10px; top: -20px;
+  font-family: var(--serif); font-size: 220px;
+  font-weight: 700; color: rgba(26,53,96,0.04);
+  line-height: 1; pointer-events: none; letter-spacing: -0.05em;
+}
+
+.hero-inner { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: end; }
+
+.hero-eyebrow {
+  font-family: var(--mono); font-size: 10px;
+  color: var(--navy); letter-spacing: 0.12em;
+  text-transform: uppercase; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.hero-eyebrow::after { content: ''; width: 30px; height: 1px; background: var(--navy); opacity: 0.4; }
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.8vw, 54px);
+  font-weight: 700; line-height: 1.05;
+  color: var(--navy); margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+.hero h1 em { font-style: italic; color: var(--gold); }
+
+.hero-sub { font-size: 14px; color: var(--ink2); max-width: 560px; line-height: 1.72; }
+
+.hero-chips { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; min-width: 190px; }
+.hchip {
+  font-family: var(--mono); font-size: 9.5px;
+  padding: 5px 12px; border-radius: 3px;
+  border: 1px solid var(--line2); color: var(--ink3);
+  letter-spacing: 0.04em; white-space: nowrap;
+}
+.hchip.n { border-color: var(--navy-line); color: var(--navy); background: var(--navy-dim); }
+.hchip.g { border-color: var(--gold-line); color: var(--gold); background: var(--gold-dim); }
+.hchip.s { border-color: var(--steel-line); color: var(--steel); background: var(--steel-dim); }
+
+/* ═══ LAYOUT ═══ */
+.layout { display: grid; grid-template-columns: 248px 1fr; min-height: calc(100vh - var(--nav-h)); }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  position: sticky; top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow-y: auto; border-right: 1px solid var(--line);
+  padding: 20px 0; background: var(--bg);
+  scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar { display: none; }
+
+.sb-group { margin-bottom: 6px; }
+.sb-head {
+  font-family: var(--mono); font-size: 8.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 10px 18px 3px; display: block;
+}
+.sh-rh { color: var(--navy); }
+.sh-hm { color: var(--gold); }
+.sh-hd { color: var(--steel); }
+.sh-en { color: var(--sapphire); }
+.sh-fin { color: var(--ink3); }
+
+.sb-link {
+  display: flex; align-items: flex-start; gap: 8px;
+  padding: 7px 18px; font-size: 11.5px;
+  color: var(--ink3); text-decoration: none;
+  border-left: 2px solid transparent;
+  transition: all 0.13s; line-height: 1.35;
+}
+.sb-link:hover { color: var(--navy); border-left-color: var(--navy); background: var(--navy-dim); }
+.sb-link.active { color: var(--navy); border-left-color: var(--navy); background: var(--navy-dim); }
+.sb-link.hm:hover, .sb-link.hm.active { color: var(--gold); border-left-color: var(--gold); background: var(--gold-dim); }
+.sb-link.hd:hover, .sb-link.hd.active { color: var(--steel); border-left-color: var(--steel); background: var(--steel-dim); }
+.sb-link.en:hover, .sb-link.en.active { color: var(--sapphire); border-left-color: var(--sapphire); background: var(--sapphire-dim); }
+
+.sb-n { font-family: var(--mono); font-size: 9.5px; min-width: 16px; margin-top: 1px; flex-shrink: 0; }
+.sn-rh { color: var(--navy); }
+.sn-hm { color: var(--gold); }
+.sn-hd { color: var(--steel); }
+.sn-en { color: var(--sapphire); }
+
+/* ═══ CONTENT ═══ */
+.content { padding: 44px 56px; max-width: 980px; }
+
+/* ═══ SECTION ═══ */
+.section { margin-bottom: 72px; scroll-margin-top: 72px; }
+.section-head {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 28px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.sec-tag {
+  font-family: var(--mono); font-size: 9.5px;
+  letter-spacing: 0.08em; padding: 3px 9px;
+  border-radius: 3px; white-space: nowrap; flex-shrink: 0;
+}
+.st-n { background: var(--navy-dim); border: 1px solid var(--navy-line); color: var(--navy); }
+.st-g { background: var(--gold-dim); border: 1px solid var(--gold-line); color: var(--gold); }
+.st-s { background: var(--steel-dim); border: 1px solid var(--steel-line); color: var(--steel); }
+.st-e { background: var(--sapphire-dim); border: 1px solid rgba(30,77,140,0.3); color: var(--sapphire); }
+
+.section h2 {
+  font-family: var(--serif); font-size: 26px;
+  font-weight: 700; color: var(--navy); line-height: 1.1;
+}
+
+/* ═══ PERSPECTIVE BANNER ═══ */
+.pov-banner {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 18px; border-radius: 8px; margin-bottom: 20px;
+}
+.pov-n { background: linear-gradient(135deg, rgba(26,53,96,0.07), rgba(26,53,96,0.04)); border: 1px solid var(--navy-line); }
+.pov-g { background: linear-gradient(135deg, rgba(184,132,30,0.08), rgba(184,132,30,0.04)); border: 1px solid var(--gold-line); }
+.pov-s { background: linear-gradient(135deg, rgba(42,95,143,0.08), rgba(42,95,143,0.04)); border: 1px solid var(--steel-line); }
+
+.pov-icon { font-size: 22px; flex-shrink: 0; }
+.pov-text h3 { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px; }
+.pov-text p { font-size: 12.5px; color: var(--ink2); }
+.pov-n .pov-text h3 { color: var(--navy); }
+.pov-g .pov-text h3 { color: var(--gold); }
+.pov-s .pov-text h3 { color: var(--steel); }
+
+/* ═══ CARD ═══ */
+.card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 8px; padding: 20px 24px; margin-bottom: 14px;
+  box-shadow: 0 1px 4px rgba(26,53,96,0.05);
+}
+.card.n { border-left: 3px solid var(--navy); }
+.card.g { border-left: 3px solid var(--gold); }
+.card.s { border-left: 3px solid var(--steel); }
+.card.o { border-left: 3px solid var(--olive); }
+.card.w { border-left: 3px solid var(--wine); }
+.card.t { border-left: 3px solid var(--terra); }
+
+.card-title {
+  font-family: var(--mono); font-size: 9.5px;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 10px;
+}
+.ct-n { color: var(--navy); }
+.ct-g { color: var(--gold); }
+.ct-s { color: var(--steel); }
+.ct-o { color: var(--olive); }
+.ct-w { color: var(--wine); }
+.ct-t { color: var(--terra); }
+
+/* ═══ Q&A ACCORDION ═══ */
+.qa { border: 1px solid var(--line); border-radius: 7px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(26,53,96,0.05); }
+.qa-q {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; cursor: pointer;
+  background: #fff; transition: background 0.13s; user-select: none;
+}
+.qa-q:hover { background: var(--bg2); }
+.qa-num {
+  font-family: var(--mono); font-size: 9.5px;
+  padding: 2px 7px; border-radius: 3px;
+  white-space: nowrap; margin-top: 2px; flex-shrink: 0;
+}
+.qn-n { color: var(--navy); background: var(--navy-dim); border: 1px solid var(--navy-line); }
+.qn-g { color: var(--gold); background: var(--gold-dim); border: 1px solid var(--gold-line); }
+.qn-s { color: var(--steel); background: var(--steel-dim); border: 1px solid var(--steel-line); }
+.qn-e { color: var(--sapphire); background: var(--sapphire-dim); border: 1px solid rgba(30,77,140,0.28); }
+
+.qa-text { font-size: 13.5px; color: var(--ink); font-weight: 500; flex: 1; line-height: 1.45; }
+.qa-chev { color: var(--ink3); transition: transform 0.2s; flex-shrink: 0; margin-top: 3px; font-size: 13px; }
+.qa.open .qa-chev { transform: rotate(180deg); }
+.qa-body { display: none; padding: 18px 20px 20px; border-top: 1px solid var(--line); background: var(--bg); }
+.qa.open .qa-body { display: block; }
+
+/* ═══ SCRIPT ═══ */
+.script {
+  background: #EBF0F8;
+  border: 1px solid rgba(26,53,96,0.15);
+  border-left: 3px solid var(--navy);
+  border-radius: 5px; padding: 14px 18px;
+  margin: 10px 0; font-family: var(--mono);
+  font-size: 11.5px; color: #0D2550;
+  line-height: 1.78; white-space: pre-wrap;
+}
+.script.en { border-left-color: var(--sapphire); background: #EBF0F8; color: #142B5A; }
+.script.gold { border-left-color: var(--gold); background: #F5EDD8; color: #5A3A0A; }
+.script em { color: var(--ink3); font-style: normal; }
+
+/* ═══ ALERT ═══ */
+.alert { padding: 12px 16px; border-radius: 5px; margin: 12px 0; font-size: 13px; line-height: 1.65; }
+.alert strong { display: block; font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; margin-bottom: 5px; opacity: 0.65; }
+.al-n { background: var(--navy-dim); border: 1px solid var(--navy-line); color: #0D2550; }
+.al-g { background: var(--gold-dim); border: 1px solid var(--gold-line); color: #5A3A0A; }
+.al-s { background: var(--steel-dim); border: 1px solid var(--steel-line); color: #102840; }
+.al-o { background: var(--olive-dim); border: 1px solid var(--olive-line); color: #1A3D20; }
+.al-w { background: var(--wine-dim); border: 1px solid var(--wine-line); color: #4A0A0A; }
+.al-t { background: var(--terra-dim); border: 1px solid var(--terra-line); color: #5A2A10; }
+.al-e { background: var(--sapphire-dim); border: 1px solid rgba(30,77,140,0.28); color: #102840; }
+
+/* ═══ GRID ═══ */
+.g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.g3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+
+/* ═══ TABLE ═══ */
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin: 12px 0; }
+th { font-family: var(--mono); font-size: 9px; color: var(--navy); letter-spacing: 0.07em; text-transform: uppercase; padding: 9px 12px; text-align: left; background: var(--navy-dim); border-bottom: 1px solid var(--line); }
+td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: var(--ink2); vertical-align: top; line-height: 1.5; }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(26,53,96,0.03); }
+
+/* ═══ BADGE ═══ */
+.badge { display: inline-block; font-family: var(--mono); font-size: 9px; padding: 2px 8px; border-radius: 20px; font-weight: 600; letter-spacing: 0.04em; }
+.bm { background: var(--wine-dim); color: var(--wine); border: 1px solid var(--wine-line); }
+.bg { background: var(--steel-dim); color: var(--steel); border: 1px solid var(--steel-line); }
+.bo { background: var(--olive-dim); color: var(--olive); border: 1px solid var(--olive-line); }
+
+/* ═══ CHECKLIST ═══ */
+.chklist { list-style: none; }
+.chklist li { display: flex; gap: 10px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid rgba(26,53,96,0.08); font-size: 13px; color: var(--ink2); line-height: 1.5; }
+.chklist li:last-child { border-bottom: none; }
+.chk { width: 17px; height: 17px; border-radius: 3px; border: 1px solid var(--line2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; font-size: 10px; cursor: pointer; transition: all 0.15s; }
+.chk.done { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* ═══ TIMELINE ═══ */
+.tl { padding-left: 24px; border-left: 2px solid var(--line); margin: 14px 0; }
+.tl-item { position: relative; margin-bottom: 18px; }
+.tl-item::before { content: ''; position: absolute; left: -31px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--navy); border: 2px solid var(--bg2); }
+.tl-label { font-family: var(--mono); font-size: 9.5px; color: var(--navy); margin-bottom: 3px; letter-spacing: 0.05em; }
+.tl-item p { font-size: 13px; color: var(--ink2); line-height: 1.55; }
+
+/* ═══ JD BLOCK ═══ */
+.jd-block { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(26,53,96,0.06); }
+.jd-q { padding: 14px 20px; background: var(--navy-dim); border-left: 3px solid var(--navy); }
+.jd-q-label { font-family: var(--mono); font-size: 9px; color: var(--navy); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+.jd-q-text { font-family: var(--serif); font-size: 14px; font-style: italic; color: #6B4A10; line-height: 1.5; }
+.jd-body { padding: 18px 20px; background: #fff; border-top: 1px solid var(--line); }
+.decode-lbl { font-family: var(--mono); font-size: 9px; color: var(--olive); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+.decode-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.dc { }
+.dc-title { font-family: var(--mono); font-size: 9px; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 7px; padding-bottom: 5px; border-bottom: 1px solid var(--line); }
+.dc-n { color: var(--navy); }
+.dc-g { color: var(--gold); }
+.dc-s { color: var(--steel); }
+.dc ul { list-style: none; }
+.dc ul li { font-size: 12px; color: var(--ink2); padding: 4px 0; border-bottom: 1px solid rgba(26,53,96,0.07); line-height: 1.5; padding-left: 10px; position: relative; }
+.dc ul li::before { content: '›'; position: absolute; left: 0; color: var(--navy); }
+.dc ul li:last-child { border-bottom: none; }
+
+/* ═══ MATCH ROWS ═══ */
+.match-row { display: grid; grid-template-columns: 48px 1fr 14px 1fr; gap: 10px; align-items: start; padding: 8px 0; border-bottom: 1px solid rgba(26,53,96,0.1); font-size: 12.5px; }
+.match-row:last-child { border-bottom: none; }
+.mt { font-family: var(--mono); font-size: 8.5px; padding: 2pt 6pt; border-radius: 3px; }
+.mt-m { background: var(--wine-dim); color: var(--wine); border: 1px solid var(--wine-line); }
+.mt-g { background: var(--steel-dim); color: var(--steel); border: 1px solid var(--steel-line); }
+.match-jd { color: var(--ink2); line-height: 1.45; }
+.match-arr { color: var(--ink3); text-align: center; padding-top: 1px; }
+.match-you { color: #6B4A10; font-style: italic; line-height: 1.45; }
+
+/* ═══ FLOW ═══ */
+.flow { display: grid; grid-template-columns: repeat(6,1fr); gap: 6px; margin: 12px 0; }
+.flow-step { background: var(--bg2); border: 1px solid var(--line); border-radius: 4px; padding: 10px; }
+.flow-n { font-family: var(--mono); font-size: 9px; color: var(--navy); margin-bottom: 4px; }
+.flow-t { font-size: 11px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.flow-s { font-size: 10px; color: var(--ink3); line-height: 1.35; }
+
+/* ═══ ENGLISH BLOCKS ═══ */
+.en-block { border: 1px solid rgba(30,77,140,0.22); border-radius: 8px; overflow: hidden; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(30,77,140,0.06); }
+.en-block-head { display: flex; align-items: center; gap: 12px; padding: 13px 18px; background: rgba(30,77,140,0.05); border-bottom: 1px solid rgba(30,77,140,0.12); cursor: pointer; user-select: none; transition: background 0.13s; }
+.en-block-head:hover { background: rgba(30,77,140,0.1); }
+.en-block-head .ql { font-family: var(--mono); font-size: 9.5px; color: var(--sapphire); background: rgba(30,77,140,0.1); border: 1px solid rgba(30,77,140,0.28); padding: 2px 7px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+.en-block-head .qt { font-size: 13px; color: var(--ink); font-weight: 500; flex: 1; }
+.en-block-head .chev { color: var(--ink3); transition: transform 0.2s; font-size: 13px; }
+.en-block.open .chev { transform: rotate(180deg); }
+.en-block-body { display: none; padding: 16px 18px 18px; background: #EEF2FA; }
+.en-block.open .en-block-body { display: block; }
+
+/* ═══ SCROLL TOP ═══ */
+.scroll-top { position: fixed; bottom: 24px; right: 24px; width: 40px; height: 40px; background: var(--navy); color: #fff; border: none; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s; z-index: 200; box-shadow: 0 4px 14px rgba(26,53,96,0.3); }
+.scroll-top.vis { opacity: 1; }
+
+/* ═══ DIVIDER ═══ */
+hr { border: none; border-top: 1px solid var(--line); margin: 24px 0; }
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  .content { padding: 28px 20px; }
+  .hero { padding: 40px 20px 32px; }
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-chips { flex-direction: row; flex-wrap: wrap; align-items: flex-start; }
+  .g2, .g3, .decode-grid, .flow { grid-template-columns: 1fr; }
+  .match-row { grid-template-columns: 48px 1fr; }
+  .match-arr, .match-you { display: none; }
+  nav { padding: 0 16px; gap: 12px; }
+  .nav-tabs { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress" id="prog"></div>
+
+<nav>
+  <span class="nav-logo">KEYTRADE_BANK // ENTRETIEN_PREP_v1.0</span>
+  <ul class="nav-tabs">
+    <li><a class="nav-tab" href="#rh-decoder">RH — Interlocuteurs</a></li>
+    <li><a class="nav-tab" href="#rh-profil">RH — Profil</a></li>
+    <li><a class="nav-tab" href="#hm-tprm">HM — TPRM Cours</a></li>
+    <li><a class="nav-tab" href="#hm-qa">HM — Q&A</a></li>
+    <li><a class="nav-tab" href="#hd-vision">HD — Vision</a></li>
+    <li><a class="nav-tab" href="#hd-qa">HD — Q&A</a></li>
+    <li><a class="nav-tab" href="#english">🇬🇧 10 EN Q&A</a></li>
+    <li><a class="nav-tab" href="#safe-phrases">🎯 3 Phrases safe</a></li>
+    <li><a class="nav-tab" href="#mapping">Mapping</a></li>
+    <li><a class="nav-tab" href="#pieges">Pièges</a></li>
+    <li><a class="nav-tab" href="#checklist">Checklist</a></li>
+  </ul>
+  <span class="nav-badge" onclick="document.getElementById('english').scrollIntoView({behavior:'smooth'})">🇬🇧 EN KIT</span>
+</nav>
+
+<!-- ════════════════════════ HERO ════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Préparation entretien — 3 perspectives — Confidentiel</div>
+      <h1>Operational Risk Officer<br><em>TPRM</em><br>Keytrade Bank</h1>
+      <p class="hero-sub">Guide triple perspectif : RH (fit culturel & CV), Hiring Manager (technicité TPRM), Head of Department (vision risque & stratégie). Plus le kit anglais complet pour tenir si l'entretien bascule.</p>
+    </div>
+    <div class="hero-chips">
+      <span class="hchip n">RÔLE CIBLE</span>
+      <span class="hchip">Risk Management Dept.</span>
+      <span class="hchip">Keytrade Bank</span>
+      <span class="hchip">Crédit Mutuel Arkéa Group</span>
+      <span class="hchip g">👁 RH + Hiring Manager</span>
+      <span class="hchip s">🏛 Head of Department</span>
+      <span class="hchip n">🇬🇧 English Kit inclus</span>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+<aside class="sidebar">
+  <div class="sb-group">
+    <span class="sb-head sh-rh">👁 Perspective RH</span>
+    <a class="sb-link" href="#rh-decoder"><span class="sb-n sn-rh">R1</span>Décoder + interlocuteurs</a>
+    <a class="sb-link" href="#rh-profil"><span class="sb-n sn-rh">R2</span>Profil & fit culturel</a>
+    <a class="sb-link" href="#rh-qa"><span class="sb-n sn-rh">R3</span>6 Q&A RH scriptées</a>
+  </div>
+  <div class="sb-group">
+    <span class="sb-head sh-hm">⚙️ Hiring Manager</span>
+    <a class="sb-link hm" href="#hm-tprm"><span class="sb-n sn-hm">H1</span>TPRM — Cours complet</a>
+    <a class="sb-link hm" href="#hm-dora"><span class="sb-n sn-hm">H2</span>DORA & cadre réglementaire</a>
+    <a class="sb-link hm" href="#hm-mapping"><span class="sb-n sn-hm">H3</span>Mapping compétences</a>
+    <a class="sb-link hm" href="#hm-qa"><span class="sb-n sn-hm">H4</span>Q&A techniques</a>
+  </div>
+  <div class="sb-group">
+    <span class="sb-head sh-hd">🏛 Head of Department</span>
+    <a class="sb-link hd" href="#hd-vision"><span class="sb-n sn-hd">D1</span>Vision stratégique risque</a>
+    <a class="sb-link hd" href="#hd-keytrade"><span class="sb-n sn-hd">D2</span>Keytrade — contexte</a>
+    <a class="sb-link hd" href="#hd-qa"><span class="sb-n sn-hd">D3</span>Q&A senior</a>
+  </div>
+  <div class="sb-group">
+    <span class="sb-head sh-en">🇬🇧 English Kit</span>
+    <a class="sb-link en" href="#english"><span class="sb-n sn-en">E0</span>Overview</a>
+    <a class="sb-link en" href="#en-role"><span class="sb-n sn-en">E1</span>Your role in English</a>
+    <a class="sb-link en" href="#en-qa"><span class="sb-n sn-en">E2</span>10 Q&A in English</a>
+    <a class="sb-link en" href="#safe-phrases"><span class="sb-n sn-en">E2b</span>3 phrases safe</a>
+    <a class="sb-link en" href="#en-vocab"><span class="sb-n sn-en">E3</span>TPRM Vocabulary EN</a>
+  </div>
+  <div class="sb-group">
+    <span class="sb-head sh-fin">✓ Finalisation</span>
+    <a class="sb-link" href="#mapping"><span class="sb-n sn-rh">F1</span>Mapping profil → JD</a>
+    <a class="sb-link" href="#pieges"><span class="sb-n sn-rh">F2</span>Pièges à éviter</a>
+    <a class="sb-link" href="#checklist"><span class="sb-n sn-rh">F3</span>Checklist J-1 / Jour J</a>
+  </div>
+</aside>
+
+<div class="content">
+
+<!-- ════════════════════════════════════════
+     PERSPECTIVE RH
+════════════════════════════════════════ -->
+
+<!-- R1 — DÉCODER -->
+<section class="section" id="rh-decoder">
+  <div class="section-head">
+    <span class="sec-tag st-n">R1 — RH</span>
+    <h2>Décoder le poste — Ce que la RH cherche vraiment</h2>
+  </div>
+
+  <div class="pov-banner pov-n">
+    <span class="pov-icon">👁</span>
+    <div class="pov-text">
+      <h3>Perspective RH</h3>
+      <p>La RH évalue le fit culturel, la clarté du parcours et la motivation. Elle ne teste pas la technicité TPRM — elle filtre les profils incohérents et les candidats sans motivation réelle pour une banque digitale.</p>
+    </div>
+  </div>
+
+  <div class="card n">
+    <div class="card-title ct-n">Les interlocuteurs — Noms réels identifiés</div>
+    <table>
+      <thead><tr><th>Qui</th><th>Rôle</th><th>Ce qu'il/elle évalue</th><th>Ton registre</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Frédérique Dricot</strong></td><td>Talent Acquisition Specialist — background bancaire + Keytrade Genève</td><td>Fit culturel, cohérence du parcours, motivation réelle, niveau EN/NL</td><td>Conversationnel, humain, motivé. Elle connaît le métier — pas de flou.</td></tr>
+        <tr><td><strong>Charlotte Ziber</strong></td><td>Talent Acquisition Assistant</td><td>Screening initial, logistique, disponibilité</td><td>Synthétique, clair, professionnel</td></tr>
+        <tr><td><strong>Damien Hegarty</strong></td><td>Manager Operational Risk — ton manager direct</td><td>Technicité TPRM, collaboration multi-stakeholders, autonomie</td><td>Technique, précis, basé sur des exemples STAR</td></tr>
+        <tr><td><strong>Vaston Prifti, FRM</strong></td><td>Chief Risk Officer — certification FRM (GARP) = formation quantitative poussée</td><td>Vision stratégique, compréhension du "build-or-buy", maturité intellectuelle sur le risque</td><td>Hauteur de vue, langage CRO, mentionner DORA + build-or-buy</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card g">
+    <div class="card-title ct-g">"Build-or-buy" — Le concept révélé par le post de Vaston Prifti</div>
+    <p style="color:var(--ink2);font-size:13px;margin-bottom:10px;">Le post LinkedIn du CRO dit : <em>"you'll be at the core of build-or-buy decisions for new internal or client-facing services."</em> Ce n'est pas dans la JD. C'est le vrai enjeu stratégique du rôle.</p>
+    <div class="g2" style="margin-bottom:0;">
+      <div>
+        <p style="color:var(--ink2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--gold);">Ce que ça signifie :</strong> quand Keytrade veut un nouveau service (ex. plateforme de paiement, outil de conformité, infra cloud), elle choisit soit de le construire en interne (build) soit de l'acheter à un tiers (buy). Tu es un input structurant dans cette décision.</p>
+        <p style="color:var(--ink2);font-size:13px;"><strong style="color:var(--gold);">Si "buy" :</strong> TPRM entre en jeu — évaluation du fournisseur, due diligence, clauses DORA. Tu dis si le risque du fournisseur est acceptable.</p>
+      </div>
+      <div>
+        <p style="color:var(--ink2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--gold);">Si "build" :</strong> le risque tiers disparaît, mais le risque opérationnel interne prend le relais — toujours dans ton périmètre.</p>
+        <p style="color:var(--ink2);font-size:13px;"><strong style="color:var(--gold);">La phrase à retenir pour l'entretien :</strong> "Mon rôle est d'être un input dans les décisions build-or-buy — permettre à Keytrade de contracter en connaissance de cause, dans le cadre de DORA."</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card n">
+    <div class="card-title ct-n">Keytrade Bank — Ce que tu dois savoir pour paraître informé</div>
+    <table>
+      <thead><tr><th>Élément</th><th>Détail</th><th>Pourquoi c'est important en entretien</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Groupe</strong></td><td>Crédit Mutuel Arkéa — groupe bancaire français, siège à Brest. Coopératif et solide.</td><td>Montre que tu comprends la gouvernance — banque filiale avec reporting groupe</td></tr>
+        <tr><td><strong>Positionnement</strong></td><td>Pionnière de la banque en ligne en Belgique. 100% digitale — pas d'agences.</td><td>Explique pourquoi TPRM est critique : tout l'opérationnel repose sur des fournisseurs tiers</td></tr>
+        <tr><td><strong>Croissance</strong></td><td>Base clients doublée en 5 ans. Équipes en expansion continue.</td><td>Signal que le département Risk grandit — opportunité réelle d'impact et d'évolution</td></tr>
+        <tr><td><strong>7 alumni Carrefour</strong></td><td>LinkedIn indique 7 anciens Carrefour chez Keytrade</td><td>Affinité de recrutement réelle — ton background Carrefour est valorisé, pas exotique</td></tr>
+        <tr><td><strong>Culture</strong></td><td>"Dynamic, agile, scale-up mindset" + "nous récompensons les initiatives" + "votre bien-être passe avant tout"</td><td>Valoriser autonomie, initiative, adaptabilité. Ne pas venir avec un discours trop corporate.</td></tr>
+        <tr><td><strong>Services</strong></td><td>Banque quotidienne + investissement + trading. Clientèle sophistiquée.</td><td>Tiers = plateformes de trading, data providers, cloud infra — fournisseurs critiques, pas secondaires.</td></tr>
+        <tr><td><strong>Process de recrutement</strong></td><td>4 étapes : candidature → screening téléphonique → entretien → retour/offre</td><td>Ton entretien de 45 min = vraie étape 3, pas juste un screening. Frédérique va creuser.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card s">
+    <div class="card-title ct-s">Culture d'entreprise — Ce que le site révèle concrètement</div>
+    <div class="g2" style="margin-bottom:0;">
+      <div class="tl" style="margin:0;">
+        <div class="tl-item"><div class="tl-label">"Nous récompensons les initiatives"</div><p>Dans une banque de 200–300 personnes, si tu proposes une amélioration du framework TPRM, tu peux la voir mise en place dans le trimestre. Impossible chez BNP.</p></div>
+        <div class="tl-item"><div class="tl-label">"Environnement multiculturel"</div><p>Combiné aux 7 alumni Carrefour : ils recrutent des profils variés. Ton parcours Canada + Belgique + France est un atout culturel.</p></div>
+      </div>
+      <div class="tl" style="margin:0;">
+        <div class="tl-item"><div class="tl-label">"Package complet + bien-être"</div><p>Salaire compétitif, assurance groupe, hospitalisation, chèques-repas, bonus, congés. Signal de rétention — ils ne recrutent pas pour faire tourner des postes.</p></div>
+        <div class="tl-item"><div class="tl-label">"Opportunités d'évolution"</div><p>"Nous investissons dans nos collègues." Dans une organisation en croissance, l'espace pour évoluer est structurel, pas théorique.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card n">
+      <div class="card-title ct-n">Ce que la RH achète</div>
+      <ul class="chklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span>Parcours cohérent autour du risque / contrôle / compliance</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Capacité à travailler avec des parties prenantes multiples</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Rigueur documentaire et analytique</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Bilingue FR/EN — vrai, pas cosmétique</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Curiosité pour le digital et le monde fintech</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Profil qui peut grandir avec l'organisation</li>
+      </ul>
+    </div>
+    <div class="card t">
+      <div class="card-title ct-t">Ce que la RH craint</div>
+      <ul class="chklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span>Profil trop "grande banque traditionnelle" — inadapté à l'agilité</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Candidat qui ne sait pas pourquoi Keytrade spécifiquement</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Confusion entre risque opérationnel et risque de crédit/marché</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Anglais surestimé (elle vérifie en entretien)</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Manque d'exemples concrets — réponses floues</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Aucune connaissance de DORA ou TPRM</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="alert al-n">
+    <strong>// LECTURE STRATÉGIQUE</strong>
+    La JD parle de "scale-up mindset" et de "dynamic, agile" — ce n'est pas du remplissage. Keytrade veut quelqu'un qui s'adapte vite, prend des initiatives, et ne demande pas de validation pour chaque email. Ton parcours multi-pays (Canada, Belgique, France) et ton expérience en VIE sont des signaux de cette agilité.
+  </div>
+</section>
+
+<!-- R2 — PROFIL & FIT -->
+<section class="section" id="rh-profil">
+  <div class="section-head">
+    <span class="sec-tag st-n">R2 — RH</span>
+    <h2>Profil & fit culturel — Ton positionnement</h2>
+  </div>
+
+  <div class="card n">
+    <div class="card-title ct-n">Ton fil conducteur à construire — Le récit RH</div>
+    <div class="script">"Mon parcours de 4+ ans s'est construit autour d'un fil conducteur : <em>rendre les organisations résilientes face au risque</em>.
+
+Chez HSBC, j'ai développé une maîtrise du risque réglementaire côté client — KYC/CDD sur des contreparties corporate complexes. Chez Carrefour Belgium, j'ai exercé le contrôle interne avec une logique de risque opérationnel : cartographie, self-assessment sur 82 sites, reporting au Comité Exécutif. J'ai appris que les risques les plus dangereux sont souvent ceux qu'on n'a pas encore documentés.
+
+Keytrade m'intéresse précisément parce que le risque lié aux tiers est l'un des angles les plus sous-estimés en banque digitale — et avec DORA, c'est devenu critique. Rejoindre une équipe Risk en croissance sur ce périmètre, c'est l'opportunité de construire une expertise en avance sur le marché."</div>
+  </div>
+
+  <div class="g2">
+    <div class="card g">
+      <div class="card-title ct-g">Pourquoi Keytrade — 3 arguments à ne jamais oublier</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-label">1. Le timing DORA</div><p>Keytrade doit se conformer à DORA d'ici 2025. Le TPRM est au cœur de DORA. Rejoindre maintenant = être dans la construction, pas dans la maintenance.</p></div>
+        <div class="tl-item"><div class="tl-label">2. La taille humaine</div><p>En banque digitale de cette taille, chaque analyste a un périmètre visible et un impact mesurable — pas de bureaucratie qui noie le travail.</p></div>
+        <div class="tl-item"><div class="tl-label">3. La sophistication des tiers</div><p>Keytrade gère des tiers IT, cloud, data, trading platform — bien plus complexes que chez un retailer. C'est une montée en compétence réelle.</p></div>
+      </div>
+    </div>
+    <div class="card s">
+      <div class="card-title ct-s">Ton profil face aux critères de la JD</div>
+      <table style="margin:0;">
+        <thead><tr><th>Critère JD</th><th>Ton levier</th></tr></thead>
+        <tbody>
+          <tr><td>Expérience risque opérationnel</td><td>Carrefour : contrôle interne, campagnes risque 30 depts</td></tr>
+          <tr><td>Compliance / audit</td><td>HSBC : KYC/CDD, AML — risque réglementaire terrain</td></tr>
+          <tr><td>Analytique & documentation</td><td>82 POS, 12 findings, reporting Comité Exécutif</td></tr>
+          <tr><td>Multistakeholder</td><td>SAPIN II multi-depts, clients Corporate HSBC</td></tr>
+          <tr><td>FR / EN bilingue</td><td>Natif FR, courant EN (Canada — Scotiabank)</td></tr>
+          <tr><td>Secteur financier</td><td>HSBC + SocGen + Scotiabank + Carrefour Belgium</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- R3 — Q&A RH -->
+<section class="section" id="rh-qa">
+  <div class="section-head">
+    <span class="sec-tag st-n">R3 — RH</span>
+    <h2>Q&A RH — Réponses scriptées</h2>
+  </div>
+
+  <div class="pov-banner pov-n">
+    <span class="pov-icon">👁</span>
+    <div class="pov-text"><h3>Registre RH</h3><p>Conversationnel, structuré, humain. Pas trop technique. Elle veut comprendre QUI tu es et POURQUOI tu es là. Durée cible : 60–90 secondes.</p></div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-n">Q.R1</span><span class="qa-text">Présentez-vous en 2–3 minutes.</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="alert al-n" style="margin-top:0;"><strong>// STRUCTURE</strong>Parcours → fil conducteur risque → pourquoi Keytrade. Pas de liste chronologique. 2 minutes max. Chronomètre-toi.</div>
+      <div class="script">"J'ai un master en finance bancaire et un peu plus de 4 ans d'expérience en gestion des risques dans des environnements bancaires.
+
+Mon fil conducteur est assez clair : j'ai toujours travaillé sur la maîtrise du risque, mais sous différents angles.
+
+J'ai commencé à la Société Générale sur du risque de crédit et de la conformité client. Chez HSBC ensuite, en tant que Corporate Relationship Manager, j'étais en première ligne sur des sujets KYC/CDD pour un portefeuille de clients entreprises — très exposée au risque réglementaire et à l'évaluation de contreparties complexes. Et aujourd'hui chez Carrefour Belgium, je travaille sur la cartographie des risques opérationnels, les campagnes de self-assessment sur 82 sites, et le reporting au Comité Exécutif.
+
+Ce qui m'attire chez Keytrade, c'est le modèle de banque 100% digitale, où une grande partie du risque opérationnel repose sur les prestataires externes. Le TPRM est donc un enjeu central — renforcé par DORA. Et j'ai vu dans le post de Vaston Prifti que le rôle est au cœur des décisions build-or-buy. C'est exactement la dimension stratégique du risque sur laquelle je veux construire mon expertise."</div>
+      <div class="alert al-g" style="margin-top:8px;"><strong>// NOTE TACTIQUE</strong>Mentionner le post de Vaston Prifti montre que tu as fait ta recherche au-delà de la JD. Frédérique va le noter.</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-n">Q.R2</span><span class="qa-text">Pourquoi le TPRM — pourquoi maintenant ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"C'est la suite logique de mon parcours.
+
+J'ai déjà fait de l'analyse d'entités externes en KYC chez HSBC, et du pilotage du risque en contrôle interne chez Carrefour. Le TPRM combine exactement ces deux dimensions — mais appliquées aux fournisseurs.
+
+Et dans une banque digitale comme Keytrade, le risque passe beaucoup par les tiers, surtout IT. Avec DORA, c'est devenu un sujet central. C'est le bon moment pour me spécialiser.
+
+Et ce que j'apporte dès maintenant, c'est la logique analytique et la rigueur documentaire — les deux fondamentaux du TPRM."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-n">Q.R3</span><span class="qa-text">Vous n'avez pas d'expérience directe en TPRM — comment vous compensez ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="alert al-t" style="margin-top:0;"><strong>// RÈGLE</strong>Sois honnête. Ne prétends pas avoir fait du TPRM formel. Ancre sur la logique structurellement analogue. C'est ta réponse la plus importante.</div>
+      <div class="script">"Je n'ai pas de titre TPRM sur mon CV, et je ne vais pas prétendre le contraire. Mais si on décompose ce que le TPRM demande — collecter des informations sur une entité externe, évaluer leur fiabilité, documenter le risque, et reporter — j'ai fait exactement ça.
+
+Chez HSBC, en KYC/CDD sur des clients corporate, j'évaluais mes contreparties sur les mêmes dimensions qu'un fournisseur : solidité financière, structure de gouvernance, exposition réglementaire, contrôles internes. La seule différence, c'est que mon objet d'évaluation était un client. Ici, ce sera un tiers fournisseur. La logique analytique est identique.
+
+Chez Carrefour Belgium, j'ai ajouté la dimension opérationnelle : évaluer des processus complexes sur 30 départements, documenter les findings de façon structurée, reporter directement au Comité Exécutif avec une recommandation claire.
+
+Ce que j'apporte : la rigueur de l'évaluation et l'intégrité du reporting. Le label TPRM, je le construis ici."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-n">Q.R4</span><span class="qa-text">Le TPRM au quotidien, c'est quoi selon vous ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="alert al-n" style="margin-top:0;"><strong>// ATTENTION</strong>Frédérique peut poser cette question pour vérifier que tu as lu l'offre et que tu comprends le contenu réel du rôle. Réponds avec le cycle de vie — pas une définition abstraite.</div>
+      <div class="script">"Au quotidien, le TPRM consiste à encadrer le risque lié aux fournisseurs sur tout leur cycle de vie.
+
+Concrètement, ça passe par cinq étapes : identifier les fournisseurs critiques en fonction de leur impact sur les opérations ; évaluer leur niveau de risque sur des dimensions financières, opérationnelles, IT et réglementaires ; encadrer la relation contractuellement avec des SLA et des clauses de contrôle ; assurer un suivi dans le temps avec des indicateurs de performance et le suivi des incidents ; et gérer les situations à risque avec des plans de mitigation ou une escalade si nécessaire.
+
+C'est exactement le périmètre que DORA a formalisé pour les banques — avec l'obligation de maintenir un registre des fournisseurs, de conduire des due diligences documentées, et de s'assurer que les contrats contiennent les clauses requises.
+
+Ce cycle me parle directement : l'évaluation d'entités externes, je l'ai pratiquée chez HSBC en KYC. La documentation structurée et le reporting, chez Carrefour."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-n">Q.R5</span><span class="qa-text">Pourquoi Keytrade Bank spécifiquement — et pas une grande banque ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Trois raisons concrètes.
+
+Le timing DORA d'abord. Rejoindre maintenant, c'est participer à la construction du framework — pas arriver quand tout est figé. C'est un contexte où l'impact est immédiat.
+
+La nature des tiers ensuite. En banque digitale, les fournisseurs sont des infrastructures critiques — cloud, plateformes de trading, data providers. Évaluer leur risque est bien plus complexe et formateur qu'en retail traditionnel.
+
+Et la taille humaine enfin. Ici, si je propose une amélioration du framework TPRM, je peux la voir mise en place dans le trimestre. Dans une grande banque, ça prend 3 ans de validation. Je veux voir l'impact de mon travail."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-n">Q.R6</span><span class="qa-text">Où vous voyez-vous dans 2–3 ans ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Dans 2–3 ans, j'ambitionne d'être la référence TPRM de l'équipe — quelqu'un que les métiers viennent consulter spontanément quand ils s'apprêtent à contracter avec un nouveau fournisseur.
+
+Concrètement : maîtriser le cycle complet, avoir contribué à la mise en conformité DORA, et idéalement élargi mon périmètre vers d'autres dimensions du risque opérationnel.
+
+Keytrade est une organisation qui grandit vite — c'est aussi un critère pour moi. Dans une équipe en expansion, il y a naturellement de l'espace pour prendre plus de responsabilités."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PERSPECTIVE HIRING MANAGER
+════════════════════════════════════════ -->
+
+<!-- H1 — TPRM COURS -->
+<section class="section" id="hm-tprm">
+  <div class="section-head">
+    <span class="sec-tag st-g">H1 — Hiring Manager</span>
+    <h2>TPRM — Cours complet opérationnel</h2>
+  </div>
+
+  <div class="pov-banner pov-g">
+    <span class="pov-icon">⚙️</span>
+    <div class="pov-text"><h3>Perspective Hiring Manager</h3><p>Il/elle évalue ta technicité TPRM, ta compréhension des risques fournisseurs, et ta capacité à travailler avec IT, Legal, Procurement, et Compliance. Il testera avec des cas concrets et des définitions précises.</p></div>
+  </div>
+
+  <div class="alert al-w"><strong>// PRIORITÉ ABSOLUE</strong>Le Hiring Manager est expert TPRM. Il va tester tes définitions, ta connaissance du cycle fournisseur, et ta lecture des outils de due diligence (SOC reports, questionnaires de sécurité). Maîtrise ces notions avant l'entretien.</div>
+
+  <div class="card g">
+    <div class="card-title ct-g">TPRM — Définition et périmètre exact</div>
+    <p style="color:var(--ink2);font-size:13px;margin-bottom:10px;"><strong>Third-Party Risk Management (TPRM)</strong> = le processus structuré par lequel une organisation identifie, évalue, surveille et gère les risques découlant de ses relations avec des tiers — fournisseurs, prestataires, sous-traitants, partenaires.</p>
+    <table>
+      <thead><tr><th>Type de tiers</th><th>Exemples chez Keytrade</th><th>Risques typiques</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Fournisseurs IT / Cloud</strong></td><td>Hébergeurs, éditeurs logiciels, infra cloud (AWS, Azure)</td><td>Cyberrisque, disponibilité, concentration</td></tr>
+        <tr><td><strong>Outsourcing critique</strong></td><td>Core banking, plateforme trading, payment processors</td><td>Continuité d'activité, conformité réglementaire</td></tr>
+        <tr><td><strong>Data providers</strong></td><td>Flux de données de marché, KYC data</td><td>Qualité des données, protection, GDPR</td></tr>
+        <tr><td><strong>Fournisseurs non-critiques</strong></td><td>Marketing, RH, FM</td><td>Risque limité, monitoring allégé</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card g">
+    <div class="card-title ct-g">Le cycle de vie TPRM — Les 5 phases</div>
+    <div class="flow">
+      <div class="flow-step"><div class="flow-n">01</div><div class="flow-t">Identification</div><div class="flow-s">Recenser tous les tiers, les classer par criticité</div></div>
+      <div class="flow-step"><div class="flow-n">02</div><div class="flow-t">Due Diligence</div><div class="flow-s">Évaluer le risque avant onboarding : questionnaires, SOC reports, financials</div></div>
+      <div class="flow-step"><div class="flow-n">03</div><div class="flow-t">Onboarding</div><div class="flow-s">Formaliser la relation : contrat, SLA, clauses de droit d'audit</div></div>
+      <div class="flow-step"><div class="flow-n">04</div><div class="flow-t">Monitoring</div><div class="flow-s">Suivi continu : KRIs, incidents, réassessments périodiques</div></div>
+      <div class="flow-step"><div class="flow-n">05</div><div class="flow-t">Offboarding</div><div class="flow-s">Gestion de la sortie : transfert de données, fin des accès, documentation</div></div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card g">
+      <div class="card-title ct-g">Classification des tiers — Criticité</div>
+      <table style="margin:0;">
+        <thead><tr><th>Niveau</th><th>Critères</th><th>Traitement</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Critique</strong></td><td>Interruption = impact significatif sur les clients ou les opérations</td><td>Due diligence complète, monitoring trimestriel, droit d'audit</td></tr>
+          <tr><td><strong>Important</strong></td><td>Impact modéré, substituable mais avec effort</td><td>Due diligence standard, monitoring semestriel</td></tr>
+          <tr><td><strong>Non-critique</strong></td><td>Facilement remplaçable, impact limité</td><td>Questionnaire simplifié, monitoring annuel</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card g">
+      <div class="card-title ct-g">Outils de due diligence — Ce que tu dois savoir lire</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-label">SOC 1 / SOC 2 Reports</div><p>Rapports d'audit sur les contrôles internes d'un prestataire. SOC 1 = contrôles financiers. SOC 2 = sécurité, disponibilité, confidentialité. Type I = design. Type II = efficacité opérationnelle sur une période.</p></div>
+        <div class="tl-item"><div class="tl-label">Security Questionnaires (VSAQ, SIG...)</div><p>Questionnaires standardisés sur les pratiques de cybersécurité du fournisseur. Tu reviews les réponses, identifies les gaps, demandes des preuves.</p></div>
+        <div class="tl-item"><div class="tl-label">Financial Statements</div><p>Solidité financière du fournisseur : risque de défaillance. Un fournisseur critique qui fait faillite = continuité d'activité compromise.</p></div>
+        <div class="tl-item"><div class="tl-label">BCP / DRP Documentation</div><p>Business Continuity Plan / Disaster Recovery Plan. Le fournisseur peut-il continuer à te servir en cas de crise ?</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card g">
+    <div class="card-title ct-g">KRIs (Key Risk Indicators) — Exemples TPRM</div>
+    <table>
+      <thead><tr><th>KRI</th><th>Ce qu'il mesure</th><th>Seuil d'alerte</th></tr></thead>
+      <tbody>
+        <tr><td>Disponibilité du service fournisseur</td><td>Uptime vs. SLA contractuel</td><td>&lt;99.5% sur 30 jours</td></tr>
+        <tr><td>Nombre d'incidents non résolus</td><td>Incidents ouverts depuis &gt;X jours</td><td>&gt;3 incidents critiques ouverts</td></tr>
+        <tr><td>Score de risque fournisseur</td><td>Résultat de l'assessment périodique</td><td>Dégradation de &gt;20 points</td></tr>
+        <tr><td>Concentration de fournisseurs</td><td>% de services critiques chez 1 seul tiers</td><td>&gt;30% chez un seul prestataire</td></tr>
+        <tr><td>Taux de complétion des assessments</td><td>Fournisseurs évalués / fournisseurs dus</td><td>&lt;90% des réassessments dans les délais</td></tr>
+        <tr><td>Couverture contractuelle</td><td>Fournisseurs avec clauses TPRM requises</td><td>&lt;100% des fournisseurs critiques</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- H2 — DORA -->
+<section class="section" id="hm-dora">
+  <div class="section-head">
+    <span class="sec-tag st-g">H2 — Hiring Manager</span>
+    <h2>DORA & cadre réglementaire — Ce qu'il faut maîtriser</h2>
+  </div>
+
+  <div class="card g">
+    <div class="card-title ct-g">DORA — Digital Operational Resilience Act</div>
+    <p style="color:var(--ink2);font-size:13px;margin-bottom:12px;">Règlement européen entré en vigueur en janvier 2025. Applicable à toutes les entités financières de l'UE (banques, assurances, PSP...). Keytrade est directement dans le scope.</p>
+    <table>
+      <thead><tr><th>Pilier DORA</th><th>Ce que ça signifie</th><th>Lien TPRM</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ICT Risk Management</strong></td><td>Cadre de gestion des risques IT</td><td>Les fournisseurs IT sont inclus dans ce cadre</td></tr>
+        <tr><td><strong>Incident Reporting</strong></td><td>Déclaration obligatoire des incidents ICT majeurs à l'autorité</td><td>Les incidents causés par des tiers doivent être documentés et reportés</td></tr>
+        <tr><td><strong>Digital Operational Resilience Testing</strong></td><td>Tests de résilience obligatoires (TLPT pour les entités critiques)</td><td>Tiers peuvent être inclus dans le périmètre de test</td></tr>
+        <tr><td><strong>ICT Third-Party Risk</strong></td><td>Gestion renforcée des prestataires ICT — registre obligatoire, due diligence, clauses contractuelles</td><td><strong>Cœur du rôle TPRM chez Keytrade</strong></td></tr>
+        <tr><td><strong>Information Sharing</strong></td><td>Partage d'informations sur les cybermenaces entre entités financières</td><td>Contexte de collaboration sectorielle</td></tr>
+      </tbody>
+    </table>
+    <div class="alert al-g" style="margin-top:10px;"><strong>// PHRASE CLÉ À MÉMORISER</strong>"DORA rend obligatoire ce que beaucoup de banques faisaient de façon informelle : documenter et évaluer tous les fournisseurs ICT, maintenir un registre des contrats, et s'assurer que les clauses de résiliation et de continuité sont en place. C'est exactement le périmètre du rôle."</div>
+  </div>
+
+  <div class="g2">
+    <div class="card s">
+      <div class="card-title ct-s">Autres réglementaires à connaître</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-label">Guidelines EBA sur l'outsourcing (2019)</div><p>Lignes directrices de l'Autorité Bancaire Européenne sur la sous-traitance. Précèdent DORA et en constituent la base conceptuelle. Distinguent outsourcing critique vs. non-critique.</p></div>
+        <div class="tl-item"><div class="tl-label">GDPR</div><p>Les fournisseurs qui traitent des données personnelles de clients Keytrade sont des sous-traitants RGPD. Les contrats doivent inclure des DPA (Data Processing Agreements).</p></div>
+        <div class="tl-item"><div class="tl-label">NBB Circulaires</div><p>La Banque Nationale de Belgique émet des circulaires sur la gestion des risques opérationnels et l'outsourcing. Keytrade est supervisée par la NBB.</p></div>
+      </div>
+    </div>
+    <div class="card s">
+      <div class="card-title ct-s">Risque de concentration — Concept critique</div>
+      <p style="color:var(--ink2);font-size:13px;margin-bottom:10px;">Un risque spécifique TPRM en banque digitale : la dépendance excessive à un seul fournisseur ou à un petit nombre de prestataires.</p>
+      <p style="color:var(--ink2);font-size:13px;margin-bottom:8px;"><strong>Exemple :</strong> si Keytrade utilise AWS pour 80% de son infrastructure cloud et qu'AWS a une panne régionale — impact potentiellement catastrophique.</p>
+      <p style="color:var(--ink2);font-size:13px;"><strong>Ton rôle :</strong> identifier ces concentrations, les reporter, et s'assurer qu'une stratégie de sortie est documentée.</p>
+      <div class="alert al-g" style="margin-top:8px;"><strong>// DORA ANGLE</strong>DORA exige explicitement la gestion du risque de concentration. Mentionner ce concept montre que tu as une compréhension au-delà du simple checklist.</div>
+    </div>
+  </div>
+</section>
+
+<!-- H3 — MAPPING COMPÉTENCES -->
+<section class="section" id="hm-mapping">
+  <div class="section-head">
+    <span class="sec-tag st-g">H3 — Hiring Manager</span>
+    <h2>Mapping compétences techniques → JD</h2>
+  </div>
+
+  <div class="jd-block">
+    <div class="jd-q"><div class="jd-q-label">Responsabilité JD</div><div class="jd-q-text">"Support the TPRM process for new and existing third-party vendors and outsourcing arrangements. Assist in evaluating vendor risk across operational resilience, financial stability, information security, data protection, and business continuity."</div></div>
+    <div class="jd-body">
+      <div class="decode-lbl">Traduction concrète + lien profil</div>
+      <div class="decode-grid">
+        <div class="dc"><div class="dc-title dc-n">Ce que ça signifie</div><ul><li>Conduire les évaluations risque pour chaque nouveau fournisseur (onboarding) et pour les fournisseurs existants (reassessment périodique)</li><li>5 dimensions d'évaluation : résilience opérationnelle, solidité financière, sécurité de l'information, protection des données, continuité</li><li>Pas de jugement subjectif — grille structurée, documentée, tracée</li></ul></div>
+        <div class="dc"><div class="dc-title dc-g">Au quotidien</div><ul><li>Procurement signale un nouveau fournisseur cloud → tu envoies un questionnaire de sécurité, tu reviews le SOC 2, tu évalues le BCP, tu produis une fiche de risque avec recommandation</li><li>Fournisseur critique à reassesser → tu contactes l'owner interne, collectes les documents mis à jour, mises à jour le score de risque</li><li>Tu popules et maintiens l'inventaire des tiers dans le GRC outil</li></ul></div>
+        <div class="dc"><div class="dc-title dc-s">Ton levier profil</div><ul><li>Carrefour : évaluation structurée de risques sur 30 depts avec grille probabilité × impact = même logique</li><li>HSBC KYC : évaluation de contreparties sur dimensions financières, conformité, gouvernance = mêmes axes qu'une due diligence fournisseur</li><li>Documentation formelle : 12 findings structurés, reportés au Comité Exécutif</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="jd-block">
+    <div class="jd-q"><div class="jd-q-label">Responsabilité JD</div><div class="jd-q-text">"Review vendor documentation for risk assessment purposes, including SOC reports, financial statements, security questionnaires, and control frameworks."</div></div>
+    <div class="jd-body">
+      <div class="decode-lbl">Ce que ça demande concrètement</div>
+      <div class="decode-grid">
+        <div class="dc"><div class="dc-title dc-n">SOC Reports — comment les lire</div><ul><li>Section 1 : description du service et des contrôles — comprendre le périmètre</li><li>Section 3 : opinion de l'auditeur — qualified ou unqualified ? Exceptions ?</li><li>Section 4 : tests des contrôles — quels contrôles ont été testés, résultats, exceptions</li><li>Regarder la période de couverture — un SOC 2 de 2021 ne vaut rien en 2025</li></ul></div>
+        <div class="dc"><div class="dc-title dc-g">Security Questionnaire — que chercher</div><ul><li>Chiffrement des données en transit et au repos</li><li>Gestion des accès et authentification MFA</li><li>Procédures de patch management</li><li>Plan de réponse aux incidents cyber</li><li>Certifications : ISO 27001, SOC 2, CSA STAR</li></ul></div>
+        <div class="dc"><div class="dc-title dc-s">Financial Statements — que regarder</div><ul><li>Ratio de liquidité — le fournisseur peut-il honorer ses obligations à CT ?</li><li>Trend du CA et de la rentabilité — est-ce en déclin ?</li><li>Endettement — risque de défaillance ?</li><li>Dépendance à un client unique — si Keytrade représente 40% de son CA, c'est un risque</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="jd-block">
+    <div class="jd-q"><div class="jd-q-label">Responsabilité JD</div><div class="jd-q-text">"Track key risk indicators (KRIs) and risk issues related to third-party vendors. Support the preparation of risk reports and dashboards for senior management and risk committees."</div></div>
+    <div class="jd-body">
+      <div class="decode-lbl">Monitoring & Reporting — ta zone de valeur ajoutée</div>
+      <div class="decode-grid">
+        <div class="dc"><div class="dc-title dc-n">KRIs — ce que tu surveilles</div><ul><li>Incidents reportés par les fournisseurs — nombre, sévérité, délai de résolution</li><li>SLA compliance — le fournisseur respecte-t-il ses engagements de service ?</li><li>Score de risque agrégé par fournisseur et par catégorie</li><li>Retards dans les reassessments planifiés</li></ul></div>
+        <div class="dc"><div class="dc-title dc-g">Dashboards — ce que tu produis</div><ul><li>Vue globale de l'inventaire des tiers par niveau de risque</li><li>Statut des évaluations en cours et en retard</li><li>Incidents ouverts et leur état de remédiation</li><li>Tendances : le profil de risque s'améliore-t-il ou se dégrade-t-il ?</li></ul></div>
+        <div class="dc"><div class="dc-title dc-s">Ton levier profil</div><ul><li>Carrefour : reporting KPI au Comité Exécutif — tu sais structurer un message pour des décideurs seniors</li><li>Sapin II : monitoring périodique avec cycle de reporting défini — même logique</li><li>Excel avancé + outils de reporting = critère JD que tu coches</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- H4 — Q&A Hiring Manager -->
+<section class="section" id="hm-qa">
+  <div class="section-head">
+    <span class="sec-tag st-g">H4 — Hiring Manager</span>
+    <h2>Q&A techniques — Réponses scriptées</h2>
+  </div>
+
+  <div class="pov-banner pov-g">
+    <span class="pov-icon">⚙️</span>
+    <div class="pov-text"><h3>Registre Hiring Manager</h3><p>Technique, précis, basé sur des exemples concrets. Il posera des questions de type cas pratique : "Que feriez-vous si...". Durée cible : 90–120 secondes, structure STAR.</p></div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-g">Q.H1</span><span class="qa-text">Comment évalueriez-vous le risque d'un nouveau fournisseur cloud critique ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Ma démarche suivrait 5 étapes.
+
+D'abord, la classification préliminaire : est-ce un fournisseur critique au sens de la JD et de DORA ? Je regarde si une interruption de service impacterait significativement les clients ou les opérations. Pour un cloud critique, la réponse est généralement oui.
+
+Ensuite, la collecte documentaire : SOC 2 Type II récent (moins de 12 mois), questionnaire de sécurité (ISO 27001 ou VSAQ), états financiers pour évaluer la solidité, et documentation BCP/DRP.
+
+Troisièmement, l'évaluation structurée sur les 5 dimensions : résilience opérationnelle (uptime historique, SLA), solidité financière, sécurité de l'information (certifications, politique de patch management), protection des données (GDPR compliance, localisation des données), et continuité (leur plan de reprise, RPO/RTO).
+
+Quatrièmement, la documentation formelle : fiche de risque avec score, identified gaps et recommandations, dont les clauses contractuelles requises (droit d'audit, notification d'incidents, clause de résiliation).
+
+Enfin, le suivi : une fois le fournisseur onboardé, tracker les KRIs définis et planifier le prochain reassessment selon le niveau de criticité."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-g">Q.H2</span><span class="qa-text">Qu'est-ce que DORA et en quoi impacte-t-il votre rôle chez Keytrade ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"DORA — Digital Operational Resilience Act — est le règlement européen entré en vigueur en janvier 2025 qui encadre la résilience opérationnelle numérique des entités financières. Keytrade est dans son scope en tant que banque.
+
+Le pilier le plus directement lié à mon rôle, c'est le quatrième : ICT Third-Party Risk. DORA impose plusieurs exigences concrètes : maintenir un registre exhaustif de tous les prestataires ICT avec leur classification, conduire des due diligences formalisées avant l'onboarding, s'assurer que les contrats contiennent des clauses spécifiques (droit d'audit, plans de sortie, notification d'incidents), et mettre en place un monitoring continu.
+
+Ce que ça signifie opérationnellement : si je rejoins Keytrade, il est probable que le framework TPRM soit en cours de mise en conformité avec DORA — et mon rôle sera de contribuer à cette mise en conformité, pas seulement de maintenir un système existant. C'est un des éléments qui m'attire dans ce timing."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-g">Q.H3</span><span class="qa-text">Comment gérez-vous un incident opérationnel causé par un fournisseur tiers ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Ma démarche suivrait un processus en 4 temps.
+
+D'abord, la qualification : est-ce un vrai incident ou une dégradation de service ? Quelle est la sévérité — quel impact sur les opérations ou les clients ? Qui est l'owner interne du fournisseur concerné ?
+
+Ensuite, la coordination immédiate : contacter l'owner interne et le fournisseur pour avoir une première évaluation et un ETR (Estimated Time to Resolution). M'assurer que le management est informé si le seuil de sévérité l'exige.
+
+Troisièmement, la documentation en temps réel : log de l'incident avec timeline, impacts constatés, actions prises, communications échangées avec le fournisseur. Cette documentation sert à la fois pour le comité de risque et, si l'incident est significatif, pour le reporting réglementaire — notamment sous DORA.
+
+Enfin, la phase post-incident : analyse des causes racines, revue des SLA contractuels, et évaluation de si cet incident doit modifier le profil de risque du fournisseur. Si c'est un incident récurrent, c'est un signal pour reclassifier le fournisseur ou engager une conversation sur des mesures correctives."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-g">Q.H4</span><span class="qa-text">Comment travailleriez-vous avec l'IT security et le Legal sur un dossier fournisseur ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"La collaboration multi-stakeholder est au cœur du TPRM — c'est l'un des aspects que j'ai pratiqués chez Carrefour Belgium dans une configuration similaire, même si l'objet était différent.
+
+Concrètement, sur un nouveau fournisseur : je suis le coordinateur du processus d'évaluation. Je sollicite l'IT Security pour qu'il analyse les réponses au questionnaire de sécurité et le SOC 2 — leur expertise est indispensable pour évaluer si les contrôles techniques sont adéquats. Je sollicite le Legal pour s'assurer que les clauses contractuelles requises par notre politique TPRM et par DORA sont présentes et conformes — droit d'audit, notification d'incidents, clause de résiliation, DPA si applicable.
+
+Mon rôle n'est pas de me substituer à leur expertise — c'est de structurer le processus, de m'assurer que chaque partie contribue dans les délais, et de synthétiser leurs inputs dans une fiche de risque globale avec une recommandation go/no-go.
+
+Chez Carrefour, j'ai géré cette logique de coordination sans autorité hiérarchique — en adaptant ma communication à chaque interlocuteur. Avec l'IT, je parle de contrôles et de vulnérabilités. Avec le Legal, de clauses et d'exposition contractuelle. La synthèse appartient au Risk."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-g">Q.H5</span><span class="qa-text">Qu'est-ce qu'un SOC 2 Type II et comment l'analysez-vous ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Un SOC 2 est un rapport d'audit réalisé par un cabinet indépendant sur les contrôles internes d'un prestataire de services, selon le référentiel Trust Services Criteria de l'AICPA. Il couvre cinq principes : sécurité, disponibilité, intégrité du traitement, confidentialité, et vie privée.
+
+La distinction Type I / Type II est critique : le Type I atteste que les contrôles sont bien conçus à une date donnée. Le Type II atteste que ces contrôles ont fonctionné efficacement sur une période — généralement 6 à 12 mois. C'est le Type II qui a de la valeur en due diligence.
+
+Quand j'analyse un SOC 2 Type II, je regarde trois choses principalement.
+
+Premièrement, l'opinion de l'auditeur en section 3 : est-elle qualified (avec réserves) ou unqualified (propre) ? Une opinion qualified mérite une attention immédiate sur les points soulevés.
+
+Deuxièmement, les exceptions dans les tests de contrôles en section 4 : quelles exceptions ont été identifiées, sur quels contrôles, et le prestataire a-t-il fourni un plan de remédiation ?
+
+Troisièmement, la période de couverture : un SOC 2 doit être récent — au-delà de 12 mois, sa valeur diminue fortement. Je vérifierais également si les périmètres couverts correspondent bien aux services que Keytrade utilise."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     PERSPECTIVE HEAD OF DEPARTMENT
+════════════════════════════════════════ -->
+
+<!-- D1 — VISION -->
+<section class="section" id="hd-vision">
+  <div class="section-head">
+    <span class="sec-tag st-s">D1 — Head of Dept.</span>
+    <h2>Vision stratégique du risque tiers</h2>
+  </div>
+
+  <div class="pov-banner pov-s">
+    <span class="pov-icon">🏛</span>
+    <div class="pov-text"><h3>Perspective Head of Department</h3><p>Il/elle évalue si tu comprends l'enjeu business du risque tiers, ta maturité intellectuelle sur le sujet, et si tu peux devenir une vraie ressource pour le département dans 12–18 mois. Il teste la hauteur de vue et l'autonomie.</p></div>
+  </div>
+
+  <div class="card s">
+    <div class="card-title ct-s">Pourquoi le TPRM est devenu stratégique en banque digitale</div>
+    <p style="color:var(--ink2);font-size:13px;margin-bottom:12px;">Il y a 10 ans, le risque tiers était traité comme une fonction de procurement. Aujourd'hui, c'est une fonction de gestion des risques à part entière. Plusieurs raisons convergentes :</p>
+    <div class="g2">
+      <div>
+        <p style="color:var(--ink2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--steel);">1. La digitalisation a externalisé le cœur des opérations.</strong> Une banque comme Keytrade n'existerait pas sans ses fournisseurs cloud, ses plateformes de trading, ses data providers. Si ces tiers tombent, Keytrade tombe.</p>
+        <p style="color:var(--ink2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--steel);">2. La réglementation a rattrapé la réalité.</strong> DORA formalise ce qui était implicite. Le régulateur (NBB/BCE) s'attend désormais à un registre, des due diligences documentées, et des clauses contractuelles précises.</p>
+      </div>
+      <div>
+        <p style="color:var(--ink2);font-size:13px;margin-bottom:8px;"><strong style="color:var(--steel);">3. Les incidents ont montré les limites.</strong> Les grandes pannes cloud (AWS 2021, Azure 2023) ont démontré que la concentration sur peu de fournisseurs est un risque systémique, pas théorique.</p>
+        <p style="color:var(--ink2);font-size:13px;"><strong style="color:var(--steel);">4. La chaîne de sous-traitance s'est complexifiée.</strong> Le fournisseur de ton fournisseur est ton risque aussi — notion de "fourth-party risk". DORA commence à l'adresser.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert al-s"><strong>// PHRASE QUI IMPRESSIONNE LE HEAD OF DEPT.</strong>"Ce qui m'intéresse dans le TPRM, c'est qu'il est à l'intersection de tous les risques — opérationnel, cyber, juridique, réglementaire, de concentration. Un bon analyste TPRM doit avoir une vision transversale. C'est exactement ce que j'ai construit en travaillant avec des parties prenantes diverses chez Carrefour et HSBC."</div>
+</section>
+
+<!-- D2 — KEYTRADE CONTEXTE -->
+<section class="section" id="hd-keytrade">
+  <div class="section-head">
+    <span class="sec-tag st-s">D2 — Head of Dept.</span>
+    <h2>Keytrade — Contexte stratégique & enjeux actuels</h2>
+  </div>
+
+  <div class="card s">
+    <div class="card-title ct-s">Ce que tu dois savoir sur Keytrade avant l'entretien</div>
+    <table>
+      <thead><tr><th>Dimension</th><th>Fait</th><th>Implication pour ton rôle</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Base clients doublée en 5 ans</strong></td><td>Croissance forte = nouveaux fournisseurs, nouvelles intégrations, nouveaux risques</td><td>L'inventaire TPRM est en expansion — il faut une méthode scalable</td></tr>
+        <tr><td><strong>100% digital</strong></td><td>Pas d'agences, tout repose sur l'IT et les partenaires technologiques</td><td>Les fournisseurs critiques ont un poids opérationnel maximal — tolérance au risque plus basse</td></tr>
+        <tr><td><strong>Crédit Mutuel Arkéa</strong></td><td>Groupe français coopératif — reporting groupe, standards groupe</td><td>Le framework TPRM doit être aligné avec les standards du groupe + réglementations belges</td></tr>
+        <tr><td><strong>Services trading & investissement</strong></td><td>Données de marché en temps réel, plateformes d'exécution</td><td>Fournisseurs à haute criticité — interruption = clients non-servis, risque réputationnel immédiat</td></tr>
+        <tr><td><strong>Scale-up mindset</strong></td><td>Agilité, rapidité, autonomie</td><td>Les processus TPRM doivent être efficients — pas bureaucratiques. Simplifier sans compromettre la rigueur.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="g2">
+    <div class="card s">
+      <div class="card-title ct-s">Questions intelligentes à poser au Head of Dept.</div>
+      <ul class="chklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span>"Où en est Keytrade dans sa mise en conformité DORA sur le volet TPRM — êtes-vous en phase de construction ou de consolidation ?"</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>"Combien de fournisseurs critiques sont actuellement dans le périmètre TPRM, et quelle est la maturité de leur évaluation ?"</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>"Y a-t-il un outil GRC en place pour la gestion des tiers, ou est-ce encore sur Excel ?"</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>"Comment le département Risk collabore-t-il avec le Procurement sur les nouveaux fournisseurs — en amont ou en aval du contrat ?"</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>"Quels sont les 2–3 défis TPRM prioritaires pour les 12 prochains mois ?"</li>
+      </ul>
+    </div>
+    <div class="card n">
+      <div class="card-title ct-n">Ce que le Head of Dept. veut entendre</div>
+      <div class="tl">
+        <div class="tl-item"><div class="tl-label">Tu comprends le contexte business</div><p>Tu sais que Keytrade n'est pas une banque classique et que ses fournisseurs sont stratégiques, pas secondaires.</p></div>
+        <div class="tl-item"><div class="tl-label">Tu as une vision à moyen terme</div><p>Tu ne viens pas juste "remplir des questionnaires" — tu veux contribuer à construire un framework robuste et évolutif.</p></div>
+        <div class="tl-item"><div class="tl-label">Tu es un facilitateur, pas un bloqueur</div><p>Le TPRM ne doit pas freiner le business — il doit lui permettre de contracter en confiance.</p></div>
+        <div class="tl-item"><div class="tl-label">Tu connais DORA</div><p>Mentionner DORA spontanément et correctement est un signal immédiat de sérieux.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- D3 — Q&A HEAD -->
+<section class="section" id="hd-qa">
+  <div class="section-head">
+    <span class="sec-tag st-s">D3 — Head of Dept.</span>
+    <h2>Q&A senior — Réponses hauteur de vue</h2>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-s">Q.D1</span><span class="qa-text">Comment définissez-vous un bon framework TPRM ? Quels sont ses ingrédients essentiels ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Un bon framework TPRM repose sur 4 ingrédients.
+
+Premièrement, une classification robuste des tiers. On ne peut pas traiter 200 fournisseurs de la même façon. Il faut une méthode claire pour différencier le critique du non-critique — et cette classification doit être revue à chaque changement significatif de la relation ou du service.
+
+Deuxièmement, un processus de due diligence proportionné. Pour les fournisseurs critiques, une évaluation complète sur toutes les dimensions de risque. Pour les non-critiques, un processus allégé mais documenté. La proportionnalité évite la bureaucratie tout en maintenant la rigueur là où elle est nécessaire.
+
+Troisièmement, un monitoring continu, pas un snapshot annuel. Les risques évoluent. Un fournisseur sain aujourd'hui peut avoir des difficultés financières dans 6 mois. Les KRIs permettent de détecter les signaux avant qu'ils deviennent des incidents.
+
+Quatrièmement, une gouvernance claire. Qui est propriétaire de chaque fournisseur ? Qui escalade quoi ? Comment les résultats arrivent-ils au Risk Committee ? Le framework ne vit que si les rôles et responsabilités sont définis.
+
+Ce que j'ajouterais sur le contexte Keytrade, c'est l'efficience : avec une équipe Risk de taille relative dans un environnement agile, le framework doit être actionnable — pas une machine à produire des rapports pour les rapports."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-s">Q.D2</span><span class="qa-text">Comment gérez-vous la tension entre la vitesse du business et la rigueur du processus TPRM ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"C'est la tension fondamentale du Risk — dans n'importe quel département.
+
+Ma position : le Risk n'est pas là pour dire non. Il est là pour éclairer la décision et permettre de contracter en connaissance de cause. La différence est énorme.
+
+Concrètement, j'ai deux approches selon le contexte.
+
+Pour les fournisseurs non-urgents : le processus standard s'applique avec les délais normaux. C'est ici que la rigueur complète a sa place.
+
+Pour les situations urgentes — et elles existeront : je priorise une évaluation rapide des risques les plus critiques (cybersécurité et continuité en priorité), je documente les risques résiduels acceptés explicitement par le management, et je planifie une évaluation complète dans les 60–90 jours. Ce n'est pas un contournement du processus — c'est une gestion de l'urgence avec traçabilité.
+
+Chez Carrefour, j'ai appris que les équipes terrain respectent mieux les processus de contrôle quand elles sentent que le Risk comprend leurs contraintes opérationnelles. C'est la même logique ici avec les équipes métier."</div>
+    </div>
+  </div>
+
+  <div class="qa" onclick="toggleQA(this)">
+    <div class="qa-q"><span class="qa-num qn-s">Q.D3</span><span class="qa-text">Si vous identifiez un fournisseur critique avec un risque élevé non adressé — comment escaladez-vous ?</span><span class="qa-chev">▾</span></div>
+    <div class="qa-body">
+      <div class="script">"Ma démarche en 3 niveaux.
+
+D'abord, je travaille avec l'owner interne du fournisseur pour comprendre si le risque est connu et s'il y a une mitigation en place que je n'aurais pas capturée. Parfois le risque est apparent — il est en réalité géré via des contrôles compensatoires non documentés.
+
+Si le risque est réel et non mitigé : je produis une note formelle avec la qualification du risque, son impact potentiel, et mes recommandations — que ce soit un plan de remédiation imposé au fournisseur, une reclassification, ou dans les cas extrêmes une recommandation de ne pas renouveler le contrat. Cette note va au management du Risk et à l'owner.
+
+Si le management choisit d'accepter le risque malgré ma recommandation : c'est leur prérogative — mais cette décision doit être explicitement documentée, signée, et datée. Ma responsabilité est que le risque soit visible et tracé, pas nécessairement que la décision aille dans mon sens.
+
+Ce que je n'accepte pas : qu'un risque élevé reste dans l'angle mort parce qu'on a évité la conversation difficile. Chez Carrefour, j'ai appris que la valeur d'un profil Risk, c'est précisément d'avoir le courage de nommer les risques clairement — même quand ce n'est pas confortable pour les interlocuteurs."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     ENGLISH SURVIVAL KIT
+════════════════════════════════════════ -->
+<section class="section" id="english">
+  <div class="section-head">
+    <span class="sec-tag st-e">EN — Kit</span>
+    <h2>🇬🇧 English Survival Kit</h2>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--sapphire);background:rgba(30,77,140,0.05);">
+    <div class="card-title" style="color:var(--sapphire);">Objectif de cette section</div>
+    <p style="color:var(--ink2);font-size:13px;">Keytrade précise "Proficiency in English and French" — et l'entretien peut basculer en anglais à tout moment, avec le Hiring Manager ou le Head. Ce kit te donne tes réponses clés, le vocabulaire TPRM exact, et les phrases de survie.</p>
+  </div>
+
+  <div class="alert al-e"><strong>// RÈGLE D'OR</strong>Si l'entretien bascule en anglais : ralentis ton débit, utilise les formulations ci-dessous. Une réponse courte et précise en anglais vaut bien mieux qu'une réponse longue et hésitante.</div>
+</section>
+
+<section class="section" id="en-role">
+  <div class="section-head">
+    <span class="sec-tag st-e">E1</span>
+    <h2>Your role — in English</h2>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--sapphire);">
+    <div class="card-title" style="color:var(--sapphire);">Your pitch — in English</div>
+    <div class="script en">"My background combines four-plus years across banking and risk, built around one consistent goal: helping organisations understand and manage the risks they don't always see coming.
+
+At HSBC, I assessed counterparty risk through KYC and CDD on complex corporate clients — evaluating financial stability, governance, and compliance exposure. At Carrefour Belgium, I moved into operational risk and internal control: running risk mapping campaigns across 30 departments, deploying a self-assessment framework across 82 sites, and reporting key findings to the Executive Committee.
+
+I don't have a role formally titled 'Third-Party Risk' on my CV. What I do have is the underlying methodology: structured risk evaluation, multi-stakeholder coordination, and formal documentation for senior audiences. The object of assessment changes — a vendor instead of a process — but the logic is the same.
+
+What draws me to Keytrade specifically is the timing: DORA has made TPRM a regulatory priority, and joining now means contributing to the build, not just maintaining an existing system."</div>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--sapphire);">
+    <div class="card-title" style="color:var(--sapphire);">How to explain TPRM in English</div>
+    <div class="script en">"Third-Party Risk Management is the structured process by which a financial institution identifies, assesses, monitors, and manages the risks arising from its relationships with external service providers — vendors, outsourcing partners, and subcontractors.
+
+In a digital bank like Keytrade, this is particularly critical because core operations depend entirely on third parties: cloud infrastructure, trading platforms, data providers, payment processors. If a critical vendor fails, the bank fails to serve its clients.
+
+DORA has formalised this: it now requires a comprehensive vendor register, documented due diligence before onboarding, specific contractual clauses, and ongoing monitoring. My role would sit at the heart of implementing and maintaining this framework."</div>
+  </div>
+</section>
+
+<section class="section" id="en-qa">
+  <div class="section-head">
+    <span class="sec-tag st-e">E2</span>
+    <h2>10 Q&A — Tes réponses validées en anglais</h2>
+  </div>
+
+  <div class="alert al-e"><strong>// RÈGLE DE MÉMORISATION</strong>Mémorise la structure, pas le mot à mot. L'objectif : que ça sonne naturel. Entraîne-toi à voix haute — pas dans ta tête.</div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.01</span><span class="qt">Tell me about yourself.</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"I have around 5 years of experience in risk-related roles within banking and financial services.
+
+I started in credit risk at Société Générale, then moved to KYC/CDD at HSBC where I was assessing corporate clients from a regulatory and risk perspective.
+
+I'm currently in internal control at Carrefour Belgium, working on risk assessments, self-assessments and reporting to management.
+
+What I'm looking for now is to focus on third-party risk, especially in a digital banking environment like Keytrade, where suppliers play a critical role."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.02</span><span class="qt">Why do you want to move into TPRM?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"It's a natural progression of my experience.
+
+I've already worked on assessing external entities in KYC, and on structuring and reporting risks in internal control.
+
+TPRM combines both, but applied to suppliers.
+
+And in a digital bank, third-party risk is central, especially with DORA, so it's the right moment to specialize."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.03</span><span class="qt">What do you understand about this role?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <p style="color:var(--ink3);font-size:11.5px;font-style:italic;margin-bottom:8px;">// Key question — they're checking if you read the JD and the CRO's LinkedIn post.</p>
+      <div class="script en">"My understanding is that the role covers the full lifecycle of third-party risk.
+
+This includes assessing suppliers across financial, operational and information security dimensions, reviewing documentation, maintaining the inventory of third parties, and monitoring risks through KRIs and remediation plans.
+
+There is also a governance aspect, contributing to the TPRM framework and improving processes.
+
+And from what I read in Vaston Prifti's post, the role sits at the core of build-or-buy decisions — ensuring that when Keytrade considers a new service, third-party risks are properly identified, assessed and managed."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.04</span><span class="qt">How would you assess a supplier?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"I would first determine the criticality of the supplier based on its impact on operations and customers.
+
+Then I would assess key dimensions: financial stability, operational resilience, information security and regulatory compliance.
+
+Finally, I would document the risk level and recommend mitigation measures, including contractual clauses or monitoring."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.05</span><span class="qt">Have you worked with external documentation — SOC reports, financials, security policies?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"Yes, I have experience reviewing financial information and compliance documentation in KYC roles, and control frameworks in internal control.
+
+I'm used to analyzing structured documentation and identifying key risks.
+
+I'm confident I can extend this to supplier-related documentation like SOC reports."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.06</span><span class="qt">What is a critical supplier?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"A critical supplier is one whose failure would significantly impact operations, customer services or regulatory compliance.
+
+In a digital bank, this is often the case for IT providers or infrastructure providers — where any disruption directly affects the bank's ability to serve its clients."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.07</span><span class="qt">What would you do if a supplier is high risk but still needed?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"I wouldn't reject it automatically.
+
+I would define mitigation measures such as stronger contractual clauses, enhanced monitoring and possibly a contingency plan.
+
+If the risk remains high, it should be formally escalated and accepted at the appropriate level — documented and traceable."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.08</span><span class="qt">How do you handle stakeholders pushing back on risk requirements?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"I try to understand their constraints first.
+
+Then I explain the risks and regulatory requirements in a clear and factual way — not as abstract rules, but as concrete consequences.
+
+My objective is to find a workable solution. But if the risk remains high and unmitigated, it needs to be escalated."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.09</span><span class="qt">What do you know about DORA?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <p style="color:var(--ink3);font-size:11.5px;font-style:italic;margin-bottom:8px;">// Use the "expert" version only if they ask explicitly. See the 3 safe phrases below for gradual escalation.</p>
+      <div class="script en">"DORA is a European regulation focused on strengthening operational resilience in financial institutions, with a strong emphasis on ICT risks and third-party providers.
+
+It requires better identification of critical suppliers, stronger monitoring, and more robust risk management frameworks.
+
+For a digital bank like Keytrade, it directly reinforces the importance of TPRM — both in terms of supplier classification and contractual requirements."</div>
+    </div>
+  </div>
+
+  <div class="en-block" onclick="toggleEN(this)">
+    <div class="en-block-head"><span class="ql">Q.EN.10</span><span class="qt">Why Keytrade?</span><span class="chev">▾</span></div>
+    <div class="en-block-body">
+      <div class="script en">"Keytrade operates as a digital bank, which means a strong reliance on third-party providers, especially in IT.
+
+This makes TPRM a key function — not a support one.
+
+I'm interested in joining an environment where the impact of risk management is direct and visible, and where I can develop expertise in this area at the right moment."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 3 PHRASES SAFE ─── -->
+<section class="section" id="safe-phrases">
+  <div class="section-head">
+    <span class="sec-tag st-e">E2b</span>
+    <h2>🎯 3 phrases safe — Graduées selon le contexte</h2>
+  </div>
+
+  <div class="alert al-e"><strong>// MODE D'EMPLOI</strong>Ces 3 phrases sont calibrées selon le niveau de risque que tu veux prendre. Commence par la phrase 1. Monte vers la 3 uniquement si on te relance explicitement sur DORA.</div>
+
+  <div class="card" style="border-left:3px solid var(--olive);background:var(--olive-dim);">
+    <div class="card-title ct-o">Phrase 1 — "Safe" · Niveau naturel · À placer spontanément</div>
+    <p style="color:var(--ink2);font-size:12.5px;margin-bottom:10px;">Quand tu expliques le rôle ou ta motivation. Aucun jargon, compréhensible par tous.</p>
+    <div class="script en">"Third-party risk has become even more important given the growing regulatory requirements around suppliers, especially in IT."</div>
+    <div class="script" style="border-left-color:var(--navy);">"Le TPRM est devenu un enjeu encore plus structurant avec le renforcement des exigences réglementaires sur les prestataires, notamment IT."</div>
+    <p style="color:var(--ink3);font-size:11.5px;margin-top:8px;">✔ Naturel &nbsp;✔ Pas de jargon &nbsp;✔ Montre que tu comprends le contexte sans réciter</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--gold);background:var(--gold-dim);">
+    <div class="card-title ct-g">Phrase 2 — "Crédibilité" · Niveau différenciant · Si tu veux monter d'un cran</div>
+    <p style="color:var(--ink2);font-size:12.5px;margin-bottom:10px;">Tu parles de DORA sans le dire. Tu montres une compréhension métier, pas juste réglementaire.</p>
+    <div class="script en">"We can see that requirements around critical suppliers are becoming stronger — particularly on operational resilience and ongoing monitoring."</div>
+    <div class="script" style="border-left-color:var(--gold);background:#F5EDD8;color:#5A3A0A;">"On voit clairement que les exigences autour des fournisseurs critiques se renforcent, notamment sur la résilience opérationnelle et le suivi dans le temps."</div>
+    <p style="color:var(--ink3);font-size:11.5px;margin-top:8px;">✔ Sous-entend DORA sans le nommer &nbsp;✔ Montre une compréhension métier &nbsp;✔ Différenciant mais sobre</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--sapphire);background:var(--sapphire-dim);">
+    <div class="card-title" style="color:var(--sapphire);">Phrase 3 — "Expert" · UNIQUEMENT si on te demande explicitement "Do you know DORA?"</div>
+    <p style="color:var(--ink2);font-size:12.5px;margin-bottom:10px;">Là tu peux dire DORA clairement — mais tu restes simple. Pas de récitation des 5 piliers.</p>
+    <div class="script en">"Yes — DORA focuses on strengthening operational resilience, especially around ICT third-party providers. It reinforces requirements on identifying critical suppliers, monitoring them and ensuring proper risk management over time."</div>
+    <p style="color:var(--ink3);font-size:11.5px;margin-top:8px;">✔ Répond à la question &nbsp;✔ Reste concis &nbsp;✔ Ne récite pas — explique</p>
+    <div class="alert al-e" style="margin-top:10px;"><strong>// RÈGLE</strong>N'utilise la phrase 3 que si on te pose la question directement. Placer "DORA" spontanément quand personne ne l'a demandé peut sembler forcé avec une RH junior. Garde-la pour Damien Hegarty ou Vaston Prifti.</div>
+  </div>
+
+  <div class="card n">
+    <div class="card-title ct-n">Stratégie de gradation — Résumé visuel</div>
+    <table>
+      <thead><tr><th>Contexte</th><th>Phrase à utiliser</th><th>Mentionner "DORA" ?</th></tr></thead>
+      <tbody>
+        <tr><td>Screening RH (Frédérique) — tu expliques ta motivation</td><td>Phrase 1 — "exigences réglementaires sur les prestataires IT"</td><td>Non — optionnel</td></tr>
+        <tr><td>RH te relance sur le contexte réglementaire</td><td>Phrase 2 — "résilience opérationnelle et suivi dans le temps"</td><td>Non — implicite</td></tr>
+        <tr><td>Hiring Manager (Damien) ou Head (Vaston) — tu veux te différencier</td><td>Phrase 2 ou 3</td><td>Oui — assumé</td></tr>
+        <tr><td>On te demande "Do you know DORA?" explicitement</td><td>Phrase 3 — réponse directe et concise</td><td>Oui — obligatoire</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="section" id="en-vocab">
+  <div class="section-head">
+    <span class="sec-tag st-e">E3</span>
+    <h2>TPRM Vocabulary — English reference</h2>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--sapphire);">
+    <div class="card-title" style="color:var(--sapphire);">Core TPRM terms in English</div>
+    <table>
+      <thead><tr><th>Term EN</th><th>Definition</th><th>Terme FR</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Third-Party Risk (TPR)</strong></td><td>Risk arising from relationships with external vendors, partners, or suppliers</td><td>Risque tiers / risque fournisseur</td></tr>
+        <tr><td><strong>Due Diligence</strong></td><td>Structured investigation of a vendor before onboarding</td><td>Évaluation préalable / diligence raisonnable</td></tr>
+        <tr><td><strong>Criticality Assessment</strong></td><td>Process of classifying vendors by their potential impact on operations</td><td>Évaluation de la criticité</td></tr>
+        <tr><td><strong>SOC 2 Type II</strong></td><td>Audit report on a vendor's internal controls over a defined period</td><td>Rapport d'audit SOC 2 de type II</td></tr>
+        <tr><td><strong>KRI (Key Risk Indicator)</strong></td><td>Metric used to monitor risk levels in real time</td><td>Indicateur clé de risque</td></tr>
+        <tr><td><strong>Vendor Risk Register</strong></td><td>Inventory of all third parties with their risk classification and status</td><td>Registre des risques fournisseurs</td></tr>
+        <tr><td><strong>SLA (Service Level Agreement)</strong></td><td>Contractual commitment on service performance (uptime, response time)</td><td>Accord de niveau de service</td></tr>
+        <tr><td><strong>BCP / DRP</strong></td><td>Business Continuity Plan / Disaster Recovery Plan</td><td>Plan de continuité / Plan de reprise d'activité</td></tr>
+        <tr><td><strong>Concentration Risk</strong></td><td>Over-reliance on a single vendor or a small group of vendors</td><td>Risque de concentration</td></tr>
+        <tr><td><strong>Fourth-Party Risk</strong></td><td>Risk from your vendor's own vendors (subcontractors)</td><td>Risque de sous-traitance en chaîne</td></tr>
+        <tr><td><strong>Remediation Plan</strong></td><td>Action plan to address identified vendor risk gaps</td><td>Plan de remédiation</td></tr>
+        <tr><td><strong>Outsourcing</strong></td><td>Delegating a function to a third party (regulated under EBA guidelines and DORA)</td><td>Externalisation / sous-traitance</td></tr>
+        <tr><td><strong>GRC Tool</strong></td><td>Governance, Risk & Compliance platform for managing risk records</td><td>Outil GRC</td></tr>
+        <tr><td><strong>ICT Third-Party Risk (DORA)</strong></td><td>Specific DORA pillar covering digital/technology vendor risk</td><td>Risque tiers ICT (DORA)</td></tr>
+        <tr><td><strong>Right to Audit</strong></td><td>Contractual clause allowing the bank to audit its vendors</td><td>Droit d'audit contractuel</td></tr>
+        <tr><td><strong>Exit Plan</strong></td><td>Documented procedure for terminating a vendor relationship</td><td>Plan de sortie / plan de transition</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="g2">
+    <div class="card" style="border-left:3px solid var(--sapphire);">
+      <div class="card-title" style="color:var(--sapphire);">Phrases to buy time in English</div>
+      <div class="script en" style="font-size:11px;">"That's a good question — let me structure my thinking."
+"There are a few dimensions to this. Let me address them in order."
+"If I understand correctly, you're asking about [restate] — is that right?"
+"A concrete example from my experience would be..."
+"To give you a precise answer, I'd want to make sure I understand the context."</div>
+    </div>
+    <div class="card" style="border-left:3px solid var(--sapphire);">
+      <div class="card-title" style="color:var(--sapphire);">If pushed on the TPRM gap</div>
+      <div class="script en" style="font-size:11px;">"You're right that I haven't held a role formally titled TPRM. What I bring is the underlying methodology — risk evaluation, stakeholder coordination, formal documentation. The object of assessment shifts from a process or a client to a vendor. The logic is the same."
+"I won't overclaim. But I've been deliberate about studying TPRM and DORA in preparation for this conversation — and I'm ready to build the rest on the job."</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════
+     MAPPING & PIÈGES
+════════════════════════════════════════ -->
+<section class="section" id="mapping">
+  <div class="section-head">
+    <span class="sec-tag st-n">F1</span>
+    <h2>Mapping complet profil → JD</h2>
+  </div>
+
+  <div class="card">
+    <div class="jd-body" style="padding:0;">
+      <div class="match-row" style="padding-top:6px;"><span class="mt mt-m">MUST</span><span class="match-jd">TPRM — évaluation des risques fournisseurs</span><span class="match-arr">→</span><span class="match-you">"Ma logique d'évaluation KYC chez HSBC (solidité financière, conformité, gouvernance) et mes campagnes risque Carrefour (probabilité × impact) = mêmes dimensions qu'une due diligence fournisseur"</span></div>
+      <div class="match-row"><span class="mt mt-m">MUST</span><span class="match-jd">Monitoring & KRIs</span><span class="match-arr">→</span><span class="match-you">"Reporting KPI au Comité Exécutif Carrefour + monitoring SAPIN II avec cycle périodique = production de dashboards pour décideurs seniors"</span></div>
+      <div class="match-row"><span class="mt mt-m">MUST</span><span class="match-jd">Documentation & inventaire</span><span class="match-arr">→</span><span class="match-you">"12 findings documentés et structurés, self-assessment sur 82 POS avec traçabilité complète = rigueur documentaire prouvée"</span></div>
+      <div class="match-row"><span class="mt mt-m">MUST</span><span class="match-jd">Collaboration multi-stakeholders (Procurement, Legal, IT, Compliance)</span><span class="match-arr">→</span><span class="match-you">"Coordination sans autorité hiérarchique chez Carrefour sur 30 depts + HSBC clients Corporate = gestion de parties prenantes diverses"</span></div>
+      <div class="match-row"><span class="mt mt-g">GOOD</span><span class="match-jd">Gouvernance & conformité réglementaire</span><span class="match-arr">→</span><span class="match-you">"SAPIN II (loi anticorruption française) = framework réglementaire avec reporting dual groupe/local — même logique que conformité outsourcing"</span></div>
+      <div class="match-row"><span class="mt mt-g">GOOD</span><span class="match-jd">Incident management</span><span class="match-arr">→</span><span class="match-you">"Gestion des findings et des actions correctives chez Carrefour — escalade, plan de remédiation, suivi à clôture"</span></div>
+      <div class="match-row"><span class="mt mt-g">GOOD</span><span class="match-jd">Secteur financier</span><span class="match-arr">→</span><span class="match-you">"HSBC (banking Corporate), SocGen, Scotiabank — lecture native du contexte bancaire réglementé"</span></div>
+      <div class="match-row" style="padding-bottom:6px;"><span class="mt" style="background:var(--olive-dim);color:var(--olive);border:1px solid var(--olive-line);">GÉR.</span><span class="match-jd">Néerlandais (big plus)</span><span class="match-arr">→</span><span class="match-you">"FR natif, EN courant (Canada). NL : notions fonctionnelles, renforcement actif en cours. Belgie = environnement trilingue que je connais pour avoir vécu et travaillé en Belgique."</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="pieges">
+  <div class="section-head">
+    <span class="sec-tag st-n">F2</span>
+    <h2>Pièges à éviter absolument</h2>
+  </div>
+
+  <div class="alert al-w"><strong>// PIÈGE 1 — Confondre risque tiers et risque de crédit/marché</strong>Le rôle est dans le risque OPÉRATIONNEL. Ne pas parler de spreads de crédit, de VaR, de duration. Si une question porte sur le risque financier d'un fournisseur, c'est sa solidité financière en tant qu'entreprise — pas ses positions de marché.</div>
+  <div class="alert al-w"><strong>// PIÈGE 2 — Surestimer ton niveau TPRM</strong>Tu n'as pas de rôle formellement TPRM. Ne prétends pas l'avoir. Valorise l'analogie structurelle (KYC = due diligence fournisseur, campagnes risque = évaluation), reconnais le gap, vends ta capacité d'apprentissage rapide.</div>
+  <div class="alert al-w"><strong>// PIÈGE 3 — Ne pas mentionner DORA</strong>C'est le contexte réglementaire du moment pour ce rôle exact. Ne pas le mentionner spontanément = signal que tu n'as pas fait de recherche. L'idéal : le mentionner dès ta réponse à "pourquoi ce poste".</div>
+  <div class="alert al-w"><strong>// PIÈGE 4 — Parler de "contrôle" comme un policier</strong>Même logique qu'en contrôle interne : le Risk n'est pas là pour bloquer. Il est là pour permettre au business de prendre des risques éclairés. Formule : "permettre de contracter en confiance" plutôt que "vérifier que les règles sont respectées".</div>
+  <div class="alert al-t"><strong>// PIÈGE 5 — Ignorer le contexte Keytrade (digital bank, scale-up)</strong>Keytrade dit explicitement "dynamic, agile, scale-up mindset". Ne viens pas avec un discours corporate très lourd. Mets en avant ton adaptabilité, ton autonomie, ta capacité à construire en contexte de croissance.</div>
+  <div class="alert al-t"><strong>// PIÈGE 6 — Répondre en français si l'entretien bascule en anglais</strong>La JD précise "Proficiency in English" — et l'entretien peut basculer à tout moment. Prépare tes réponses H1, H2, D1 également en anglais (cf. Section E).</div>
+</section>
+
+<!-- ════════════════════════════════════════
+     CHECKLIST
+════════════════════════════════════════ -->
+<section class="section" id="checklist">
+  <div class="section-head">
+    <span class="sec-tag st-n">F3</span>
+    <h2>Checklist J-1 / Jour J</h2>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="card-title ct-n">J-1 — Préparation</div>
+      <ul class="chklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span>Relire le cycle TPRM en 5 phases à voix haute</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Maîtriser la définition SOC 2 Type I vs. Type II</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Mémoriser les 4 piliers DORA les plus pertinents</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Préparer le pitch FR (2 min) et EN (2 min)</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Préparer Q.H1 (évaluation fournisseur) en FR et EN</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Lire le site Keytrade — produits, actualités récentes</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Vérifier LinkedIn des interlocuteurs si possible</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Préparer 4 questions (2 Hiring Manager, 2 Head of Dept.)</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Tenue professionnelle — banking = sobre, pas corporate rigide</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="card-title ct-n">Jour J — Exécution</div>
+      <ul class="chklist">
+        <li><span class="chk" onclick="toggleChk(this)"></span>Arriver 10 min en avance (pas 30)</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Éteindre le téléphone avant d'entrer</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Pitch : fil conducteur risque → Keytrade → DORA timing</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Chaque réponse technique : définition → exemple → lien profil</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Mentionner DORA au moins 1x spontanément</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Si switch anglais : ralentir, utiliser les switch phrases E3</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Poser tes questions préparées (au moins 2)</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Demander les prochaines étapes avant de partir</li>
+        <li><span class="chk" onclick="toggleChk(this)"></span>Email de remerciement dans les 24h — sobre, 3 lignes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card o">
+    <div class="card-title ct-o">Tes 3 messages à faire passer — coûte que coûte</div>
+    <div class="tl">
+      <div class="tl-item"><div class="tl-label">MESSAGE 1 — La logique analytique du risque</div><p>"J'ai déjà pratiqué l'évaluation structurée des risques — sur des processus internes chez Carrefour, sur des contreparties chez HSBC. La même rigueur s'applique à l'évaluation des tiers." → Ancres : 30 depts, KYC/CDD Corporate, 12 findings.</p></div>
+      <div class="tl-item"><div class="tl-label">MESSAGE 2 — La posture facilitateur, pas bloqueur</div><p>"Je conçois le risque comme un levier de confiance — pas comme un filtre. Mon rôle est de permettre au business de contracter en sachant exactement ce qu'il accepte." → Ancre : repositionnement du self-assessment chez Carrefour.</p></div>
+      <div class="tl-item"><div class="tl-label">MESSAGE 3 — Le choix délibéré de Keytrade + DORA</div><p>"Je ne viens pas par hasard. DORA, le timing, la taille humaine, la nature des tiers dans une banque digitale — tout converge vers une opportunité de construire une expertise rare, maintenant." → Ancre : connaissance DORA, compréhension du modèle digital.</p></div>
+    </div>
+  </div>
+
+  <div class="alert al-o"><strong>// RAPPEL FINAL</strong>Tu as le bon profil pour ce rôle. Le gap TPRM direct est réel mais compensé : KYC = due diligence fournisseur, campagnes risque = risk assessment, reporting Comité Exécutif = production pour décideurs seniors. Ce qu'ils évaluent vraiment : ton raisonnement, ta rigueur, et ta posture face au risque. Démontre les trois — le label TPRM, tu le construis avec eux.</div>
+</section>
+
+</div><!-- /content -->
+</div><!-- /layout -->
+
+<button class="scroll-top" id="st" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+window.addEventListener('scroll', () => {
+  const el = document.documentElement;
+  const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('st').classList.toggle('vis', el.scrollTop > 400);
+});
+
+function toggleQA(el) { el.classList.toggle('open'); }
+function toggleEN(el) { el.classList.toggle('open'); }
+function toggleChk(el) {
+  el.classList.toggle('done');
+  el.textContent = el.classList.contains('done') ? '✓' : '';
+  event.stopPropagation();
+}
+
+const allSections = document.querySelectorAll('.section');
+const allLinks = document.querySelectorAll('.sb-link');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting)
+      allLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  });
+}, { rootMargin: '-20% 0px -60% 0px' });
+allSections.forEach(s => obs.observe(s));
+
+const navTabs = document.querySelectorAll('.nav-tab');
+navTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    navTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
